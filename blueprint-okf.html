@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxima Chat — Runbook Bundle OKF</title>
+<style>
+/* PROXIMA RUNBOOK KIT v2 — pages A4 imprimables (Ctrl+P → PDF). Niveau débutant. */
+@font-face{font-family:"Mona Sans";src:url("assets/Mona-Sans.woff2") format("woff2-variations");font-weight:200 900;font-stretch:75% 125%;font-display:swap;}
+:root{--green:#003C1C;--green-light:#00A858;--green-glow:#00E67A;--red:#C1453B;--amber:#B7791F;
+  --green-06:rgba(0,60,28,.06);--gl-10:rgba(0,168,88,.1);--red-08:rgba(193,69,59,.08);--amber-10:rgba(183,121,31,.1);
+  --paper:#EEF1ED;--surface:#fff;--muted-bg:#F4F6F3;--line:#E3E7E2;--ink:#14231B;--muted:#5A6B62;
+  --font-sans:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-sans);letter-spacing:-.02em;color:var(--ink);margin:0;font-weight:720;line-height:1.12}
+p{margin:0}code{font-family:var(--font-mono);background:var(--green-06);color:var(--green);padding:1px 6px;border-radius:5px;font-size:.85em}
+#toolbar{position:fixed;top:16px;right:16px;z-index:100;display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;border:none;font-family:var(--font-sans);font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;cursor:pointer;box-shadow:0 6px 22px rgba(0,60,28,.25)}
+.btn svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.ghost{background:#fff;color:var(--green);box-shadow:0 4px 18px rgba(0,0,0,.08)}.btn.ghost svg{stroke:var(--green)}
+.tip{max-width:210mm;margin:14px auto -6px;padding:10px 16px;font-size:12.5px;color:var(--muted);text-align:center}
+.page{width:210mm;min-height:297mm;background:var(--surface);margin:24px auto;padding:17mm 16mm 15mm;box-shadow:0 8px 40px rgba(0,0,0,.12);position:relative;page-break-after:always}
+.page:last-child{page-break-after:auto}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--green);padding-bottom:10px;margin-bottom:20px}
+.phead .brand{display:flex;align-items:center;gap:10px}.phead .brand img{height:30px}
+.phead .doc{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.pfoot{position:absolute;bottom:9mm;left:16mm;right:16mm;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:7px}
+.eyebrow{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.15em;color:var(--green-light);font-weight:600}
+h1.title{font-size:29px;margin:6px 0 6px;letter-spacing:-.03em}
+.sub{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:64ch}
+h2.sec{font-size:16.5px;margin:22px 0 12px;padding-left:11px;border-left:3px solid var(--green-light)}
+.row{display:flex;gap:14px}.col{flex:1}
+.box{background:var(--muted-bg);border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:11px}
+.box h3{font-size:13.5px;margin-bottom:5px}.box p{font-size:12px;line-height:1.5;color:var(--muted)}
+.box.g{background:var(--gl-10);border-color:rgba(0,168,88,.22)}.box.r{background:var(--red-08);border-color:rgba(193,69,59,.2)}.box.a{background:var(--amber-10);border-color:rgba(183,121,31,.22)}
+/* GROSSES étapes lisibles débutant */
+.step{display:flex;gap:14px;margin-bottom:15px;break-inside:avoid}
+.step .n{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--font-mono)}
+.step .body{flex:1}.step h3{font-size:14px;margin-bottom:3px}.step p{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.cmd{font-family:var(--font-mono);font-size:11px;background:#0A1F14;color:#8CF0BE;padding:9px 12px;border-radius:7px;margin-top:7px;white-space:pre-wrap;line-height:1.5}
+pre.code{font-family:var(--font-mono);font-size:10.5px;background:#0A1F14;color:#CDEBDB;padding:14px 16px;border-radius:9px;line-height:1.6;white-space:pre-wrap;margin:0}
+pre.code .c{color:#5C8873}pre.code .k{color:#8CF0BE}pre.code .r{color:#F0A9A2}
+table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--muted-bg);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);font-weight:700}td b{color:var(--ink)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:var(--font-mono)}
+.pill.g{background:var(--gl-10);color:var(--green)}.pill.r{background:var(--red-08);color:var(--red)}.pill.a{background:var(--amber-10);color:var(--amber)}
+.check{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;margin-bottom:9px;line-height:1.45}
+.check .bx{width:15px;height:15px;border:1.6px solid var(--green-light);border-radius:4px;flex-shrink:0;margin-top:1px}
+.callout{background:var(--green);color:#fff;border-radius:11px;padding:15px 18px;margin-top:14px}
+.callout .eyebrow{color:var(--green-glow)}.callout p{font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.9);margin-top:5px}
+.small{font-size:11px;color:var(--muted);line-height:1.5}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}#toolbar,.tip{display:none!important}
+  .page{margin:0;box-shadow:none;width:auto;min-height:auto;break-after:page}
+  pre.code,.cmd{background:#F4F6F3!important;color:#0A1F14!important;border:1px solid #D6DAD5}
+  pre.code .c,pre.code .k,pre.code .r{color:#0A1F14!important}.cmd{color:#0A1F14!important}
+  @page{size:A4;margin:0}
+}
+@media screen and (max-width:800px){.page{width:100%;padding:22px 16px}}
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <button class="btn" onclick="window.print()"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Imprimer / PDF</button>
+  <a class="btn ghost" href="presentation-okf.html"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Présentation</a>
+</div>
+<div class="tip">Pour le PDF : Ctrl+P (ou Cmd+P) → « Enregistrer au format PDF » → cochez « Graphiques d'arrière-plan ».</div>
+
+<!-- PAGE 1 — Le bundle MVP -->
+<div class="page">
+  <div class="phead">
+    <div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Chat</b></div>
+    <div class="doc">Runbook · Bundle OKF · v0.1</div>
+  </div>
+
+  <p class="eyebrow">Vue d'ensemble</p>
+  <h1 class="title">Le bundle MVP</h1>
+  <p class="sub">On s'aligne sur la spec Google Cloud OKF v0.1 (juin 2026), pas sur le repo <code>rohaanuv</code> — qui est un exemple page-level (PDF → Meilisearch), pas la spécification. Ce runbook décrit la structure minimale à cloner, ses règles de jardinage, et les garde-fous légaux avant tout scraping.</p>
+
+  <div class="callout">
+    <p class="eyebrow">3 décisions</p>
+    <p>1. Structure commune à toutes les entreprises — le contenu est propre à chacune, la structure non.<br>
+    2. Le LLM jardine dans la structure : il ne crée jamais de domaine racine ; l'inattendu va dans <code style="background:rgba(255,255,255,.15);color:#CFF6E1">raw/</code>, rangé au prochain lint.<br>
+    3. Garde-fous RGPD avant toute démonstration de scraping.</p>
+  </div>
+
+  <h2 class="sec">Taxonomie — 8 domaines + raw</h2>
+  <table>
+    <thead><tr><th>Dossier</th><th>Couvre (APQC PCF / Porter)</th><th>CHEFTS</th></tr></thead>
+    <tbody>
+      <tr><td><code>00-strategy</code></td><td>Développer la vision et la stratégie</td><td>—</td></tr>
+      <tr><td><code>01-product</code></td><td>Développer et gérer les produits/services</td><td>T</td></tr>
+      <tr><td><code>02-market</code></td><td>Commercialiser et vendre</td><td>C</td></tr>
+      <tr><td><code>03-operations</code></td><td>Livrer produits et services (chaîne de valeur)</td><td>—</td></tr>
+      <tr><td><code>04-finance</code></td><td>Gérer les ressources financières</td><td>F</td></tr>
+      <tr><td><code>05-people</code></td><td>Gérer le capital humain</td><td>H</td></tr>
+      <tr><td><code>06-legal</code></td><td>Gérer le risque, la conformité, le juridique</td><td>—</td></tr>
+      <tr><td><code>07-esg</code></td><td>Gérer la durabilité, environnement et société</td><td>E, S</td></tr>
+      <tr><td><code>raw/</code></td><td>Non classé — en attente de lint</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:10px"><b>CHEFTS</b> = Commercial, Humain, Environnement, Finance, Technologie, Social — la colonne CHEFTS indique quelle lettre chaque dossier couvre. <code>references/</code> (sources brutes scrapées, hors taxonomie CHEFTS) est décrit page 2.</p>
+  <p class="small" style="margin-top:6px"><b>Adaptations possibles :</b> pour une SaaS pure, fusionner <code>01-product</code> dans <code>03-operations</code> ; l'ESG peut aussi être traité en tags transverses plutôt qu'en dossier dédié.</p>
+
+  <div class="pfoot"><span>Bundle OKF — Proxima Chat</span><span>Page 1 / 4</span></div>
+</div>
+
+<!-- PAGE 2 — Arborescence + frontmatter -->
+<div class="page">
+  <div class="phead">
+    <div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Chat</b></div>
+    <div class="doc">Runbook · Bundle OKF · v0.1</div>
+  </div>
+
+  <p class="eyebrow">Fondations</p>
+  <h1 class="title" style="font-size:22px">Arborescence et frontmatter</h1>
+
+  <h2 class="sec">Arborescence du bundle</h2>
+  <div class="cmd">mkdir -p bundle/{00-strategy,01-product,02-market,03-operations,04-finance,05-people,06-legal,07-esg,raw,references/scraped} &amp;&amp; cd bundle &amp;&amp; touch index.md log.md AGENTS.md</div>
+<pre class="code">bundle/
+  <span class="k">index.md</span>              <span class="c"># sommaire racine, SANS frontmatter</span>
+  <span class="k">log.md</span>                <span class="c"># journal daté, entrées récentes en haut</span>
+  <span class="k">AGENTS.md</span>             <span class="c"># schéma : règles du jardinier pour ce bundle</span>
+00-strategy/
+  index.md
+  log.md
+  mission.md
+  swot.md
+01-product/
+  index.md
+02-market/
+  index.md
+  competitors.md
+03-operations/
+  index.md
+04-finance/
+  index.md
+05-people/
+  index.md
+  team.md
+06-legal/
+  index.md
+  legal.md
+07-esg/
+  index.md
+raw/                    <span class="c"># tout ce qui n'a pas encore de place</span>
+references/
+  scraped/              <span class="c"># captures brutes Firecrawl / Apify, immuables</span></pre>
+
+  <div class="row" style="margin-top:20px">
+    <div class="col">
+      <h2 class="sec">Frontmatter — concept.md</h2>
+<pre class="code"><span class="c">---</span>
+<span class="k">type</span>: competitor          <span class="c"># REQUIS — seul champ obligatoire</span>
+<span class="k">title</span>: Concurrent X        <span class="c"># recommandé</span>
+<span class="k">description</span>: ...          <span class="c"># recommandé</span>
+<span class="k">resource</span>: https://...     <span class="c"># recommandé</span>
+<span class="k">tags</span>: [marché, veille]    <span class="c"># recommandé</span>
+<span class="k">timestamp</span>: 2026-07-09    <span class="c"># recommandé</span>
+<span class="k">status</span>: verified         <span class="c"># extension Proxima</span>
+<span class="k">sources</span>: [firecrawl]     <span class="c"># extension Proxima</span>
+<span class="c">---</span></pre>
+    </div>
+    <div class="col">
+      <div class="box g"><h3>Requis</h3><p><code>type</code> — la nature du concept (ex : competitor, person, product, decision). C'est le seul champ obligatoire de la spec.</p></div>
+      <div class="box"><h3>Recommandés</h3><p><code>title</code>, <code>description</code>, <code>resource</code>, <code>tags</code>, <code>timestamp</code> — facilitent la recherche et le lint.</p></div>
+      <div class="box a"><h3>Extensions Proxima</h3><p><code>status</code> (brouillon/vérifié), <code>sources</code> (traçabilité de l'origine de la donnée).</p></div>
+    </div>
+  </div>
+  <p class="small" style="margin-top:6px"><b>Note :</b> <code>index.md</code> n'a jamais de frontmatter — seule exception, l'index racine peut porter <code>okf_version: "0.1"</code>. Les cross-links sont des liens Markdown relatifs au bundle, ex. <code>/02-market/competitors.md</code>.</p>
+
+  <div class="pfoot"><span>Bundle OKF — Proxima Chat</span><span>Page 2 / 4</span></div>
+</div>
+
+<!-- PAGE 3 — Les règles du jardinier -->
+<div class="page">
+  <div class="phead">
+    <div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Chat</b></div>
+    <div class="doc">Runbook · Bundle OKF · v0.1</div>
+  </div>
+
+  <p class="eyebrow">Fonctionnement</p>
+  <h1 class="title" style="font-size:22px">Les règles du jardinier</h1>
+
+  <div class="step">
+    <div class="n">I</div>
+    <div class="body"><h3>Ingest</h3><p>Une donnée nouvelle (scrap, document, réponse d'entretien) arrive. Le jardinier l'écrit en Markdown, met à jour le ou les concepts concernés, ajoute les cross-links utiles, et référence la source dans le frontmatter.</p></div>
+  </div>
+  <div class="step">
+    <div class="n">Q</div>
+    <div class="body"><h3>Query</h3><p>Une question arrive. Le système répond en lisant le bundle — jamais en inventant — et cite les fichiers utilisés comme sources.</p></div>
+  </div>
+  <div class="step">
+    <div class="n">L</div>
+    <div class="body"><h3>Lint <span class="pill g" style="margin-left:6px">le plus important</span></h3><p>Un audit régulier détecte : les contradictions entre concepts, les contenus périmés (timestamp trop ancien), les fichiers orphelins (aucun lien entrant), les doublons. C'est ce qui empêche la dérive — le mode d'échec numéro un d'un bundle en production.</p></div>
+  </div>
+
+  <div class="row" style="margin-top:18px">
+    <div class="col">
+      <h2 class="sec">Gabarit index.md</h2>
+<pre class="code"><span class="c"># Marché</span>
+
+* [Concurrent X](/02-market/competitors.md) — analyse concurrentielle
+* [Positionnement](/02-market/positioning.md) — à rédiger</pre>
+    </div>
+    <div class="col">
+      <h2 class="sec">Gabarit log.md</h2>
+<pre class="code"><span class="c"># Journal — 02-market</span>
+
+<span class="k">2026-07-09</span> — ajout de 3 concurrents
+  depuis Firecrawl, à vérifier au lint.
+
+<span class="k">2026-07-02</span> — création du domaine.</pre>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p class="eyebrow">Liberté encadrée</p>
+    <p>Le jardinier crée librement des concepts à l'intérieur des 8 domaines — mais ne crée jamais de nouveau domaine racine. Ce qui ne trouve pas sa place va dans <code style="background:rgba(255,255,255,.15);color:#CFF6E1">raw/</code>, et le lint le reclasse au passage suivant.</p>
+  </div>
+
+  <div class="pfoot"><span>Bundle OKF — Proxima Chat</span><span>Page 3 / 4</span></div>
+</div>
+
+<!-- PAGE 4 — Onboarding + garde-fous -->
+<div class="page">
+  <div class="phead">
+    <div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Chat</b></div>
+    <div class="doc">Runbook · Bundle OKF · v0.1</div>
+  </div>
+
+  <p class="eyebrow">Mise en route</p>
+  <h1 class="title" style="font-size:22px">Onboarding et garde-fous légaux</h1>
+
+  <div class="step">
+    <div class="n">1</div>
+    <div class="body"><h3>Firecrawl</h3><p>Extraction du site web de l'entreprise. Facturation à l'usage (pay-as-you-go).</p></div>
+  </div>
+  <div class="step">
+    <div class="n">2</div>
+    <div class="body"><h3>Apify</h3><p>Extraction des réseaux (LinkedIn notamment). Coût indicatif : quelques centimes par profil (estimation à valider).</p></div>
+  </div>
+  <div class="step">
+    <div class="n">3</div>
+    <div class="body"><h3>Jardinier</h3><p>Mappe les données brutes dans la structure du bundle, source chaque fait ajouté.</p></div>
+  </div>
+  <div class="step">
+    <div class="n">4</div>
+    <div class="body"><h3>Effet waouh</h3><p>Dès la première connexion, l'entreprise retrouve mission, concurrents et équipe déjà renseignés.</p></div>
+  </div>
+
+  <h2 class="sec">Documents de l'effet waouh</h2>
+  <table>
+    <thead><tr><th>Fichier</th><th>Contenu</th></tr></thead>
+    <tbody>
+      <tr><td><code>mission.md</code></td><td>Mission et positionnement, depuis le site</td></tr>
+      <tr><td><code>competitors.md</code></td><td>Concurrents — dérivé et analysé, jamais scrapé tel quel</td></tr>
+      <tr><td><code>team.md</code></td><td>Équipe et organisation</td></tr>
+      <tr><td><code>legal.md</code></td><td>Identité légale — validée via INSEE / Pappers</td></tr>
+      <tr><td><code>swot.md</code></td><td>Forces, faiblesses, opportunités, menaces</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box r" style="margin-top:16px">
+    <h3>Garde-fou RGPD — avant tout scraping</h3>
+    <p>Le scraping de données personnelles LinkedIn engage le RGPD : la CNIL a sanctionné KASPR à 240 000 € (décembre 2024). On sépare systématiquement la firmographie (risque faible) des données d'employés (RGPD). La vérité légale — SIREN, TVA — vient des registres INSEE Sirene et Pappers, jamais du site de l'entreprise.</p>
+  </div>
+
+  <h2 class="sec">Check-list de lancement</h2>
+  <div class="row">
+    <div class="col">
+      <div class="check"><span class="bx"></span>Squelette du bundle (8 domaines + raw) créé</div>
+      <div class="check"><span class="bx"></span><code>AGENTS.md</code> rédigé pour ce client</div>
+      <div class="check"><span class="bx"></span>Gabarits index.md / log.md en place</div>
+      <div class="check"><span class="bx"></span>Spec de frontmatter validée (<code>type</code> requis)</div>
+    </div>
+    <div class="col">
+      <div class="check"><span class="bx"></span>Comptes Firecrawl et Apify configurés</div>
+      <div class="check"><span class="bx"></span>Prompt d'ingest testé</div>
+      <div class="check"><span class="bx"></span>Lint programmé une fois par nuit</div>
+      <div class="check"><span class="bx"></span>Test d'onboarding réalisé sur un client réel</div>
+    </div>
+  </div>
+
+  <p class="small" style="margin-top:16px">Sources : cloud.google.com/blog (OKF v0.1, juin 2026) · gist.github.com/karpathy (LLM Wiki) · anthropic.com/engineering · apqc.org (PCF) · diataxis.fr · cnil.fr (CNIL × KASPR, déc. 2024) · api.insee.fr · pappers.fr · docs.firecrawl.dev · docs.apify.com — veille juillet 2026.</p>
+
+  <div class="pfoot"><span>Bundle OKF — Proxima Chat</span><span>Page 4 / 4</span></div>
+</div>
+
+</body>
+</html>

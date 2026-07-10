@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Proxima Meet — Runbook Release &amp; OTA (A4)</title>
+<style>
+/* PROXIMA RUNBOOK KIT v2 — pages A4 imprimables (Ctrl+P → PDF). Niveau débutant. */
+@font-face{font-family:"Mona Sans";src:url("assets/Mona-Sans.woff2") format("woff2-variations");font-weight:200 900;font-stretch:75% 125%;font-display:swap;}
+:root{--green:#003C1C;--green-light:#00A858;--green-glow:#00E67A;--red:#C1453B;--amber:#B7791F;
+  --green-06:rgba(0,60,28,.06);--gl-10:rgba(0,168,88,.1);--red-08:rgba(193,69,59,.08);--amber-10:rgba(183,121,31,.1);
+  --paper:#EEF1ED;--surface:#fff;--muted-bg:#F4F6F3;--line:#E3E7E2;--ink:#14231B;--muted:#5A6B62;
+  --font-sans:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-sans);letter-spacing:-.02em;color:var(--ink);margin:0;font-weight:720;line-height:1.12}
+p{margin:0}code{font-family:var(--font-mono);background:var(--green-06);color:var(--green);padding:1px 6px;border-radius:5px;font-size:.85em}
+#toolbar{position:fixed;top:16px;right:16px;z-index:100;display:flex;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--green);color:#fff;border:none;font-family:var(--font-sans);font-weight:700;font-size:14px;padding:12px 20px;border-radius:999px;cursor:pointer;box-shadow:0 6px 22px rgba(0,60,28,.25)}
+.btn svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.ghost{background:#fff;color:var(--green);box-shadow:0 4px 18px rgba(0,0,0,.08)}.btn.ghost svg{stroke:var(--green)}
+.tip{max-width:210mm;margin:14px auto -6px;padding:10px 16px;font-size:12.5px;color:var(--muted);text-align:center}
+.page{width:210mm;min-height:297mm;background:var(--surface);margin:24px auto;padding:17mm 16mm 15mm;box-shadow:0 8px 40px rgba(0,0,0,.12);position:relative;page-break-after:always}
+.page:last-child{page-break-after:auto}
+.phead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--green);padding-bottom:10px;margin-bottom:20px}
+.phead .brand{display:flex;align-items:center;gap:10px}.phead .brand img{height:30px}
+.phead .doc{font-family:var(--font-mono);font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.pfoot{position:absolute;bottom:9mm;left:16mm;right:16mm;display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:9.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:7px}
+.eyebrow{font-family:var(--font-mono);font-size:10.5px;text-transform:uppercase;letter-spacing:.15em;color:var(--green-light);font-weight:600}
+h1.title{font-size:29px;margin:6px 0 6px;letter-spacing:-.03em}
+.sub{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:64ch}
+h2.sec{font-size:16.5px;margin:22px 0 12px;padding-left:11px;border-left:3px solid var(--green-light)}
+.row{display:flex;gap:14px}.col{flex:1}
+.box{background:var(--muted-bg);border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:11px}
+.box h3{font-size:13.5px;margin-bottom:5px}.box p{font-size:12px;line-height:1.5;color:var(--muted)}
+.box.g{background:var(--gl-10);border-color:rgba(0,168,88,.22)}.box.r{background:var(--red-08);border-color:rgba(193,69,59,.2)}.box.a{background:var(--amber-10);border-color:rgba(183,121,31,.22)}
+/* GROSSES étapes lisibles débutant */
+.step{display:flex;gap:14px;margin-bottom:15px;break-inside:avoid}
+.step .n{width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--font-mono)}
+.step .body{flex:1}.step h3{font-size:14px;margin-bottom:3px}.step p{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.cmd{font-family:var(--font-mono);font-size:11px;background:#0A1F14;color:#8CF0BE;padding:9px 12px;border-radius:7px;margin-top:7px;white-space:pre-wrap;line-height:1.5}
+pre.code{font-family:var(--font-mono);font-size:10.5px;background:#0A1F14;color:#CDEBDB;padding:14px 16px;border-radius:9px;line-height:1.6;white-space:pre-wrap;margin:0}
+pre.code .c{color:#5C8873}pre.code .k{color:#8CF0BE}pre.code .r{color:#F0A9A2}
+table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:var(--muted-bg);font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink);font-weight:700}td b{color:var(--ink)}
+.pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:10px;font-weight:700;font-family:var(--font-mono)}
+.pill.g{background:var(--gl-10);color:var(--green)}.pill.r{background:var(--red-08);color:var(--red)}.pill.a{background:var(--amber-10);color:var(--amber)}
+.check{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;margin-bottom:9px;line-height:1.45}
+.check .bx{width:15px;height:15px;border:1.6px solid var(--green-light);border-radius:4px;flex-shrink:0;margin-top:1px}
+.callout{background:var(--green);color:#fff;border-radius:11px;padding:15px 18px;margin-top:14px}
+.callout .eyebrow{color:var(--green-glow)}.callout p{font-size:12.5px;line-height:1.55;color:rgba(255,255,255,.9);margin-top:5px}
+.small{font-size:11px;color:var(--muted);line-height:1.5}
+@media print{
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{background:#fff}#toolbar,.tip{display:none!important}
+  .page{margin:0;box-shadow:none;width:auto;min-height:auto;break-after:page}
+  pre.code,.cmd{background:#F4F6F3!important;color:#0A1F14!important;border:1px solid #D6DAD5}
+  pre.code .c,pre.code .k,pre.code .r{color:#0A1F14!important}.cmd{color:#0A1F14!important}
+  @page{size:A4;margin:0}
+}
+@media screen and (max-width:800px){.page{width:100%;padding:22px 16px}}
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <button class="btn" onclick="window.print()"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Imprimer / PDF</button>
+  <a class="btn ghost" href="presentation-ota.html"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Présentation</a>
+</div>
+<div class="tip">Pour le PDF : Ctrl+P (ou Cmd+P) → « Enregistrer au format PDF » → cochez « Graphiques d'arrière-plan ».</div>
+
+<!-- PAGE 1 -->
+<div class="page">
+  <div class="phead"><div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Meet</b></div><div class="doc">Runbook · Release &amp; OTA · v1 · 09.07.2026</div></div>
+  <div class="eyebrow">Blueprint d'implémentation</div>
+  <h1 class="title">Que faire quand une version casse</h1>
+  <p class="sub">Guide pas à pas, niveau débutant, pour publier une mise à jour Proxima Meet sans risque — et pour réagir si une version déjà déployée est mauvaise.</p>
+
+  <div class="callout">
+    <div class="eyebrow">Trois règles d'or</div>
+    <p><b>1.</b> On ne rollback pas une version, <b>on avance</b> : toute correction porte un numéro strictement supérieur.&nbsp;&nbsp;<b>2.</b> Le <b>rollout progressif</b> est la vraie assurance anti-casse.&nbsp;&nbsp;<b>3.</b> On protège la clé de signature <b>aujourd'hui</b>, pas après l'incident.</p>
+  </div>
+
+  <h2 class="sec">Les 2 cas</h2>
+  <table>
+    <thead><tr><th style="width:32%">Cas</th><th>Quoi faire</th></tr></thead>
+    <tbody>
+      <tr><td><b>Bug fonctionnel</b> <span class="pill g">récupérable</span></td><td>L'app et l'updater fonctionnent encore. On corrige, on republie une version corrigée sous un numéro supérieur : tout le parc l'attrape automatiquement.</td></tr>
+      <tr><td><b>Updater cassé / clé perdue</b> <span class="pill r">non récupérable à distance</span></td><td>Plus aucun ordre distant ne passe. Aucun correctif ne peut être poussé : intervention manuelle poste par poste. La <b>prévention</b> (page 2) est donc obligatoire, pas optionnelle.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="sec">Ce qui est en place aujourd'hui</h2>
+  <div class="row">
+    <div class="col">
+      <div class="box"><h3>Endpoint de mise à jour</h3><p><code>https://proxima-meet-updates.s3.fr-par.scw.cloud/{target}/latest.json</code> — un seul bucket, aucun fallback.</p></div>
+      <div class="box"><h3>Dossiers par OS</h3><p><code>windows/</code> et <code>darwin/</code>, clés <code>windows-x86_64</code> et <code>darwin-aarch64</code> dans <code>latest.json</code>.</p></div>
+    </div>
+    <div class="col">
+      <div class="box g"><h3>Signature — fonctionne</h3><p>minisign, keyID <code>3432F4938CF02F83</code>, passphrase <b>vide</b>. Le 0.5.37 a été signé et validé le 09/07/2026.</p></div>
+      <div class="box a"><h3>Un seul bucket, une seule clé</h3><p>Aucune rotation possible aujourd'hui (Tauri n'accepte qu'une pubkey). C'est le sujet de la page 4.</p></div>
+    </div>
+  </div>
+
+  <div class="pfoot"><span>Proxima · Souveraine · Confidentielle</span><span>Page 1 / 4</span></div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page">
+  <div class="phead"><div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Meet</b></div><div class="doc">Runbook · Release &amp; OTA · v1</div></div>
+  <h2 class="sec" style="margin-top:0">Prévenir : publier une version proprement</h2>
+  <p class="small">Chaque étape = une commande à copier-coller. À suivre dans l'ordre, sans en sauter.</p>
+
+  <div style="margin-top:14px">
+    <div class="step">
+      <div class="n">1</div>
+      <div class="body">
+        <h3>Build</h3>
+        <p>Compile l'app et produit les bundles dans <code>target/release/bundle</code>.</p>
+        <div class="cmd">cd frontend &amp;&amp; pnpm exec tauri build</div>
+        <p class="small" style="margin-top:6px">L'erreur finale sur <code>TAURI_SIGNING_PRIVATE_KEY</code> est normale : les bundles sont déjà produits avant qu'elle n'apparaisse.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div class="body">
+        <h3>Signer l'artefact OTA</h3>
+        <p>Génère le fichier <code>.sig</code> avec la clé de production.</p>
+        <div class="cmd">pnpm exec tauri signer sign -f "$HOME/.proxima-keys/proxima-updater-2026.key" -p "" "target/release/bundle/nsis/Proxima Meet_0.5.38_x64-setup.exe"</div>
+        <p class="small" style="margin-top:6px">Sous Windows PowerShell, chemin de la clé : <code>"$env:USERPROFILE\.proxima-keys\proxima-updater-2026.key"</code>. Copier le contenu du <code>.sig</code> généré dans <code>latest.json</code>, champ <code>signature</code>, <b>verbatim</b> (aucun espace ni retour à la ligne ajouté).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <div class="body">
+        <h3>Staging — le test qui compte <span class="pill a">recommandé</span></h3>
+        <p>Pousser sur un 2ᵉ bucket <code>proxima-meet-updates-staging</code>. Installer la version N sur un poste de test, la pointer vers ce bucket staging, déclencher la mise à jour, et vérifier que l'app <b>redémarre bien en N+1</b> et re-check l'updater.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">4</div>
+      <div class="body">
+        <h3>Upload en production</h3>
+        <p>Dépose les artefacts Windows sur le bucket public (répéter pour <code>darwin/</code>). <b>Le <code>latest.json</code> s'uploade en dernier</b>, une fois les binaires déjà en ligne : sinon le manifeste pointe vers un artefact encore absent, et les clients reçoivent une 404 en tentant de le télécharger.</p>
+        <div class="cmd">aws s3 cp ota-package/windows/ s3://proxima-meet-updates/windows/ --recursive --exclude "latest.json" --acl public-read --endpoint-url https://s3.fr-par.scw.cloud
+aws s3 cp ota-package/windows/latest.json s3://proxima-meet-updates/windows/latest.json --acl public-read --endpoint-url https://s3.fr-par.scw.cloud</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">5</div>
+      <div class="body">
+        <h3>Vérifier que c'est public</h3>
+        <p>Doit renvoyer le bon numéro de version, en HTTP 200.</p>
+        <div class="cmd">curl https://proxima-meet-updates.s3.fr-par.scw.cloud/windows/latest.json</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">6</div>
+      <div class="body">
+        <h3>Rollout progressif</h3>
+        <p>Avec un seul <code>latest.json</code> public, tout le parc se met à jour d'un coup dès qu'il est en ligne. Pour un vrai rollout progressif&nbsp;: <b>(a)</b> pointer d'abord quelques postes pilotes vers le bucket <code>staging</code> (étape 3), valider 24&nbsp;h ; <b>(b)</b> publier ensuite le <code>latest.json</code> en production pour tout le parc.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout"><div class="eyebrow">À retenir</div><p>Valider l'app en local ≠ valider l'OTA. Le seul vrai test, c'est la transition N→N+1 (étape 3) — un bug d'updater ne se voit jamais autrement.</p></div>
+
+  <div class="pfoot"><span>Proxima · Souveraine · Confidentielle</span><span>Page 2 / 4</span></div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page">
+  <div class="phead"><div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Meet</b></div><div class="doc">Runbook · Release &amp; OTA · v1</div></div>
+  <h2 class="sec" style="margin-top:0">Récupérer : une version déjà chez les clients est mauvaise</h2>
+  <p class="small">Arbre de décision à suivre dans l'ordre. Une seule question détermine tout le reste.</p>
+
+  <div style="margin-top:14px">
+    <div class="step">
+      <div class="n">1</div>
+      <div class="body">
+        <h3>L'app se lance encore ?</h3>
+        <p><b>OUI</b> → bug fonctionnel, récupérable, on continue ci-dessous. <b>NON</b> → cas catastrophe : voir page 4 (protection de la clé et de la fondation).</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div class="body">
+        <h3>Corriger et bumper la version</h3>
+        <p>Corriger le code, puis monter le numéro de version <b>strictement au-dessus</b> (ex. <code>0.5.37</code> → <code>0.5.38</code>) dans <code>tauri.conf.json</code> et <code>package.json</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <div class="body">
+        <h3>Rebuild, re-signer, republier</h3>
+        <p>Refaire l'étape 1 puis l'étape 2 de la page 2 (build + signature), puis l'upload et le <code>latest.json</code>. Les clients passent à <code>0.5.38</code> automatiquement, sans action de leur côté.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">4</div>
+      <div class="body">
+        <h3>Règle absolue</h3>
+        <p><b>Ne jamais republier un numéro égal ou inférieur.</b> L'updater ne le proposera pas — la mise à jour serait silencieusement ignorée par tout le parc.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="sec">Script pré-déploiement — bloquant</h2>
+  <pre class="code"><span class="c"># vérifie : version strictement croissante + signature valide, avant toute promotion</span>
+NEW=$(jq -r .version new_latest.json)
+CUR=$(curl -sf https://proxima-meet-updates.s3.fr-par.scw.cloud/windows/latest.json | jq -r .version)
+[ "$(printf '%s\n%s\n' "$CUR" "$NEW" | sort -V | tail -1)" = "$NEW" ] &amp;&amp; [ "$NEW" != "$CUR" ] \
+  || { echo <span class="r">"REFUS : $NEW n'est pas strictement supérieur à $CUR"</span>; exit 1; }
+minisign -Vm "Proxima Meet_0.5.38_x64-setup.exe" -x "Proxima Meet_0.5.38_x64-setup.exe.sig" -P RWSDL/CMk/QyNBehdAlxTbTT6Yos0lab6gjrqBZqZ3X8IoXcazjTRWqc \
+  || { echo <span class="r">"REFUS : signature invalide"</span>; exit 1; }
+echo <span class="k">"OK — déploiement autorisé"</span></pre>
+
+  <h2 class="sec">Script post-déploiement — validation</h2>
+  <pre class="code"><span class="c"># le manifeste doit être public et répondre 200</span>
+curl -sf -o /dev/null -w '%{http_code}' https://proxima-meet-updates.s3.fr-par.scw.cloud/windows/latest.json
+<span class="c"># l'artefact doit exister réellement (HEAD, pas de page d'erreur)</span>
+curl -sfI https://proxima-meet-updates.s3.fr-par.scw.cloud/windows/Proxima%20Meet_0.5.38_x64-setup.exe</pre>
+
+  <div class="pfoot"><span>Proxima · Souveraine · Confidentielle</span><span>Page 3 / 4</span></div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page">
+  <div class="phead"><div class="brand"><img src="assets/logo.png" alt="Proxima"><b>Meet</b></div><div class="doc">Runbook · Release &amp; OTA · v1</div></div>
+  <h2 class="sec" style="margin-top:0">Protéger la fondation (à faire cette semaine)</h2>
+
+  <div class="callout"><div class="eyebrow">Le risque réel</div><p>Perdre le fichier-clé, c'est plus jamais de mise à jour sur tout le parc, sans recours possible.</p></div>
+
+  <div style="margin-top:14px">
+    <div class="step">
+      <div class="n">1</div>
+      <div class="body">
+        <h3>Sauvegarder la clé</h3>
+        <p>Copier <code>~/.proxima-keys/proxima-updater-2026.key</code> (et le <code>.pub</code>) dans Proton Pass (coffre équipe), plus une copie hors-ligne. Noter que la passphrase est <b>vide</b>. keyID : <code>3432F4938CF02F83</code>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div class="body">
+        <h3>Se rendre capable de rotation (dual-key, modèle Sparkle)</h3>
+        <p>Préparer une 2ᵉ clé pendant que la clé A est encore disponible — pas après l'avoir perdue.</p>
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Version</th><th>Signée avec</th><th>Embarque</th></tr></thead>
+    <tbody>
+      <tr><td><b>N</b> (déjà déployée)</td><td>Clé A</td><td>Pubkey A uniquement</td></tr>
+      <tr><td><b>N+1</b></td><td>Clé A (les clients l'acceptent encore)</td><td>Pubkey A + pubkey B</td></tr>
+      <tr><td><b>N+2</b></td><td>Clé B</td><td>Seuls les clients ≥ N+1 l'acceptent</td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:8px"><b>Règle :</b> ne jamais changer la clé <b>et</b> l'endpoint dans la même release. Ajouter un 2ᵉ endpoint (fallback) dans <code>tauri.conf.json</code> avant d'en avoir besoin.</p>
+
+  <h2 class="sec">Checklist finale</h2>
+  <div class="row">
+    <div class="col">
+      <div class="check"><span class="bx"></span><span>Clé sauvegardée dans Proton Pass</span></div>
+      <div class="check"><span class="bx"></span><span>Passphrase (vide) documentée</span></div>
+      <div class="check"><span class="bx"></span><span>2ᵉ bucket de staging créé</span></div>
+      <div class="check"><span class="bx"></span><span>Recette OTA intégrée à chaque release</span></div>
+    </div>
+    <div class="col">
+      <div class="check"><span class="bx"></span><span>Rollout progressif appliqué</span></div>
+      <div class="check"><span class="bx"></span><span>Scripts pré/post-déploiement en place</span></div>
+      <div class="check"><span class="bx"></span><span>Endpoint de fallback ajouté</span></div>
+      <div class="check"><span class="bx"></span><span>2ᵉ clé prête (dual-key)</span></div>
+    </div>
+  </div>
+
+  <p class="small" style="margin-top:14px"><b>Sources :</b> v2.tauri.app/plugin/updater · electron.build/auto-update &amp; issue #3499 (staged rollout, rollback = incrémenter au-dessus) · sparkle-project.org/documentation/eddsa-migration (rotation dual-key) · github.com/tauri-apps/tauri#7585 (multi-clé, ouvert) · semver.org — veille juillet 2026.</p>
+
+  <div class="pfoot"><span>Proxima · Souveraine · Confidentielle · réunion 09.07.2026</span><span>Page 4 / 4</span></div>
+</div>
+</body>
+</html>
