@@ -19,125 +19,144 @@
 </script>
 <style>
 :root{
-  --green:#003C1C; --green-light:#00A858; --glow:#00E67A;
-  --bg:#EEF1ED; --ink:#0a0a0a; --muted:rgba(0,0,0,.62);
-  --card:rgba(255,255,255,.72); --line:rgba(0,60,28,.12);
-  --red:#C1453B; --radius:14px;
+  --proxima-green:#003C1C; --proxima-green-light:#00A858; --proxima-green-glow:#00E67A;
+  --proxima-red:#C1453B;
+  --green-050:#E6F3EC; --green-tint-06:rgba(0,60,28,.06); --green-tint-10:rgba(0,60,28,.10);
+  --green-light-10:rgba(0,168,88,.10);
+  --bg:#EEF1ED; --surface:#FFFFFF; --surface-2:#FAFBFC; --surface-muted:#F4F5F3;
+  --border:#E5E7E4; --border-strong:#D6DAD5;
+  --fg1:#0A0A0A; --fg2:rgba(0,0,0,.65); --fg3:#6B7280; --fg4:#9CA3AF;
+  --radius:8px; --radius-md:10px; --radius-lg:14px; --radius-xl:16px; --radius-pill:999px;
+  --shadow-card:0 1px 2px rgba(0,0,0,.03),0 6px 22px rgba(0,0,0,.04);
+  --shadow-card-hover:0 1px 2px rgba(0,0,0,.04),0 10px 30px rgba(0,0,0,.08);
+  --font-sans:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --tracking-brand:-0.02em;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{
-  font-family:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
-}
-.wrap{max-width:960px;margin:0 auto;padding:0 24px}
-header{
-  position:relative; padding:56px 0 36px; overflow:hidden;
-  background:
-    radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
-    radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
-    var(--bg);
-  border-bottom:1px solid var(--line);
-}
-h1{font-size:32px;font-weight:700;letter-spacing:-.02em}
-h1 .ver{
-  background:linear-gradient(90deg,var(--green-light),var(--glow));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.tagline{font-size:17px;color:var(--muted);margin:10px 0 0}
-main{padding:32px 0 24px}
-/* Tabs */
-.tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px}
-.tab{
-  padding:10px 20px;border-radius:999px;font-weight:600;font-size:15px;cursor:pointer;
-  background:var(--card);border:1px solid var(--line);color:var(--green);
-  transition:box-shadow .2s, transform .1s;
-}
-.tab:hover{box-shadow:0 0 18px rgba(0,230,122,.25)}
-.tab.active{background:var(--green);color:#fff;border-color:var(--green);box-shadow:0 0 18px rgba(0,230,122,.35)}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--fg1);
+  font-size:17px;line-height:1.65;min-height:100vh}
+.layout{display:flex;min-height:100vh;max-width:1240px;margin:0 auto}
+/* ── Sidebar : navigation verticale ── */
+aside{width:264px;flex-shrink:0;position:sticky;top:0;height:100vh;
+  padding:44px 26px;background:var(--surface-2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column}
+.brand{font-size:24px;font-weight:800;letter-spacing:var(--tracking-brand);color:var(--proxima-green)}
+.brand small{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--proxima-green-light);margin-top:4px}
+nav.projects{margin-top:40px;display:flex;flex-direction:column;gap:6px}
+nav.projects button{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  width:100%;text-align:left;padding:13px 16px;border-radius:var(--radius-md);
+  border:none;background:none;cursor:pointer;font-family:inherit;
+  font-size:16px;font-weight:600;color:var(--fg2);transition:.15s}
+nav.projects button:hover{background:var(--green-tint-06);color:var(--proxima-green)}
+nav.projects button.active{background:var(--green-tint-10);color:var(--proxima-green)}
+nav.projects .count{font-size:12px;font-weight:700;min-width:24px;height:24px;
+  display:inline-flex;align-items:center;justify-content:center;border-radius:var(--radius-pill);
+  background:var(--green-light-10);color:var(--proxima-green)}
+aside .side-foot{margin-top:auto;font-size:12.5px;color:var(--fg3);line-height:1.5}
+/* ── Contenu ── */
+main{flex:1;padding:52px 48px 80px;min-width:0}
+.overline{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--proxima-green-light);margin-bottom:10px}
+h1{font-size:clamp(34px,4.5vw,48px);font-weight:800;letter-spacing:var(--tracking-brand);
+  line-height:1.12;color:var(--proxima-green)}
+.tagline{font-size:18px;color:var(--fg2);margin:14px 0 44px;max-width:640px}
 section[data-tab]{display:none}
 section[data-tab].active{display:block}
-/* Entries */
-a.entry{
-  display:block;text-decoration:none;color:inherit;
-  background:var(--card);backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
-  box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px 24px;margin-bottom:14px;
-  transition:box-shadow .2s, transform .1s;
+a.entry{display:block;text-decoration:none;color:inherit;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);
+  padding:30px 34px;margin-bottom:20px;transition:box-shadow .2s, transform .15s, border-color .2s}
+a.entry:hover{box-shadow:var(--shadow-card-hover);transform:translateY(-2px);
+  border-color:rgba(0,168,88,.35)}
+a.entry .date{font-size:12.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--proxima-green-light)}
+a.entry h3{font-size:26px;font-weight:700;letter-spacing:var(--tracking-brand);
+  color:var(--proxima-green);margin:6px 0 8px}
+a.entry p{font-size:16px;color:var(--fg2);max-width:680px}
+a.entry .open{display:inline-block;margin-top:14px;font-size:14px;font-weight:600;
+  color:var(--proxima-green-light)}
+.empty{color:var(--fg3);font-size:16px;padding:36px;background:var(--surface);
+  border:1px dashed var(--border-strong);border-radius:var(--radius-lg)}
+@media (max-width:820px){
+  .layout{display:block}
+  aside{position:static;width:auto;height:auto;border-right:none;
+    border-bottom:1px solid var(--border);padding:28px 20px}
+  nav.projects{flex-direction:row;overflow-x:auto;margin-top:20px;padding-bottom:4px}
+  nav.projects button{white-space:nowrap;width:auto}
+  aside .side-foot{display:none}
+  main{padding:36px 20px 60px}
+  a.entry{padding:24px}
+  a.entry h3{font-size:22px}
 }
-a.entry:hover{box-shadow:0 0 0 3px rgba(0,230,122,.15),0 0 28px rgba(0,230,122,.35);transform:translateY(-1px)}
-a.entry h3{font-size:16px;font-weight:600;color:var(--green)}
-a.entry .date{font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--green-light)}
-a.entry p{font-size:14px;color:var(--muted);margin-top:4px}
-.empty{color:var(--muted);font-size:14px;padding:24px;background:var(--card);border:1px dashed var(--line);border-radius:var(--radius)}
-footer{border-top:1px solid var(--line);margin-top:40px;padding:28px 0 44px;font-size:13px;color:var(--muted)}
-footer b{color:var(--green)}
-@media (max-width:600px){h1{font-size:26px}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <h1>Proxima <span class="ver">Partage équipe</span></h1>
-    <p class="tagline">Builds de test, récaps de chantiers et avancement — par projet.</p>
-  </div>
-</header>
+<div class="layout">
 
-<main class="wrap">
+  <aside>
+    <div class="brand">Proxima<small>Partage équipe</small></div>
+    <nav class="projects" id="nav">
+      <button class="active" data-target="meet">Proxima Meet <span class="count">2</span></button>
+      <button data-target="sites">Proxima Sites <span class="count">1</span></button>
+      <button data-target="chat">Proxima Chat <span class="count">0</span></button>
+      <button data-target="share">Proxima Share <span class="count">1</span></button>
+    </nav>
+    <div class="side-foot">
+      Diffusion interne — merci de ne pas partager ce lien hors de l'équipe.<br><br>
+      Retours : cedric@proxima.green
+    </div>
+  </aside>
 
-  <div class="tabs">
-    <button class="tab active" data-target="meet">Proxima Meet</button>
-    <button class="tab" data-target="sites">Proxima Sites</button>
-    <button class="tab" data-target="chat">Proxima Chat</button>
-    <button class="tab" data-target="share">Proxima Share</button>
-  </div>
+  <main>
+    <p class="overline">Builds de test · récaps de chantiers · avancement</p>
+    <h1>Ce qui avance, projet par projet</h1>
+    <p class="tagline">Chaque entrée s'ouvre comme une présentation : faites défiler, tout s'explique slide par slide.</p>
 
-  <section data-tab="meet" class="active">
-    <a class="entry" href="meet/2026-07-15-release-0538.html">
-      <span class="date">15 juillet 2026</span>
-      <h3>Release 0.5.38 publiée en production</h3>
-      <p>OTA prod Windows + Mac : vos réglages survivent aux mises à jour, transcription FR sans franglais, canaux staging/prod, recette à dérouler.</p>
-    </a>
-    <a class="entry" href="meet/build-0.5.38.html">
-      <span class="date">13 juillet 2026</span>
-      <h3>Build de test 0.5.38</h3>
-      <p>Persistance des préférences aux mises à jour, transcription FR sans franglais, OTA staging/prod, recette à dérouler.</p>
-    </a>
-  </section>
+    <section data-tab="meet" class="active">
+      <a class="entry" href="meet/2026-07-15-release-0538.html">
+        <span class="date">15 juillet 2026</span>
+        <h3>Release 0.5.38 publiée en production</h3>
+        <p>OTA prod Windows + Mac : vos réglages survivent aux mises à jour, transcription FR sans franglais, canaux staging/prod, recette à dérouler.</p>
+        <span class="open">Ouvrir la présentation →</span>
+      </a>
+      <a class="entry" href="meet/build-0.5.38.html">
+        <span class="date">13 juillet 2026</span>
+        <h3>Build de test 0.5.38</h3>
+        <p>Persistance des préférences aux mises à jour, transcription FR sans franglais, OTA staging/prod, recette à dérouler.</p>
+        <span class="open">Ouvrir la présentation →</span>
+      </a>
+    </section>
 
-  <section data-tab="sites">
-    <a class="entry" href="sites/2026-07-15-stripe-webhook.html">
-      <span class="date">15 juillet 2026</span>
-      <h3>Fix webhook Stripe — go.proxima.green</h3>
-      <p>Les webhooks Stripe échouaient depuis le 9 juillet (alerte de désactivation au 18). Cause trouvée, corrigée et déployée.</p>
-    </a>
-  </section>
+    <section data-tab="sites">
+      <a class="entry" href="sites/2026-07-15-stripe-webhook.html">
+        <span class="date">15 juillet 2026</span>
+        <h3>Fix webhook Stripe — go.proxima.green</h3>
+        <p>Les webhooks Stripe échouaient depuis le 9 juillet (alerte de désactivation au 18). Cause trouvée, corrigée et déployée.</p>
+        <span class="open">Ouvrir la présentation →</span>
+      </a>
+    </section>
 
-  <section data-tab="chat">
-    <div class="empty">Rien à afficher pour l'instant côté Proxima Chat.</div>
-  </section>
+    <section data-tab="chat">
+      <div class="empty">Rien à afficher pour l'instant côté Proxima Chat.</div>
+    </section>
 
-  <section data-tab="share">
-    <a class="entry" href="share/2026-07-15-site-partage.html">
-      <span class="date">15 juillet 2026</span>
-      <h3>Refonte du site de partage équipe</h3>
-      <p>Hub par projet, accès protégé par mot de passe, publication automatisée des récaps (/comteam), graphiques et mode diaporama.</p>
-    </a>
-  </section>
+    <section data-tab="share">
+      <a class="entry" href="share/2026-07-15-site-partage.html">
+        <span class="date">15 juillet 2026</span>
+        <h3>Refonte du site de partage équipe</h3>
+        <p>Hub par projet, accès protégé, récaps en mode présentation, publication automatisée.</p>
+        <span class="open">Ouvrir la présentation →</span>
+      </a>
+    </section>
+  </main>
 
-</main>
-
-<footer>
-  <div class="wrap">
-    <b>Proxima — Partage équipe</b> · Diffusion interne, merci de ne pas partager ce lien hors de l'équipe.<br>
-    Retours : cedric@proxima.green
-  </div>
-</footer>
+</div>
 
 <script>
-document.querySelectorAll('.tab').forEach(function(btn){
+document.querySelectorAll('#nav button').forEach(function(btn){
   btn.addEventListener('click',function(){
-    document.querySelectorAll('.tab').forEach(function(b){b.classList.remove('active')});
+    document.querySelectorAll('#nav button').forEach(function(b){b.classList.remove('active')});
     document.querySelectorAll('section[data-tab]').forEach(function(s){s.classList.remove('active')});
     btn.classList.add('active');
     document.querySelector('section[data-tab="'+btn.dataset.target+'"]').classList.add('active');
