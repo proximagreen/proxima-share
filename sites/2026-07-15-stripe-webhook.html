@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proxima Sites — Fix webhook Stripe (15 juillet 2026)</title>
+<script>
+(function(){
+  var K='px-share-gate';
+  if(sessionStorage.getItem(K)==='ok') return;
+  document.documentElement.style.visibility='hidden';
+  window.addEventListener('DOMContentLoaded',function(){
+    var p=prompt('Accès équipe Proxima — mot de passe :')||'';
+    if(btoa(p)==='UHJveGltYTIwMjY='){sessionStorage.setItem(K,'ok');document.documentElement.style.visibility='';}
+    else{document.body.innerHTML='<p style="font-family:sans-serif;padding:40px">Accès réservé à l\'équipe Proxima.</p>';document.documentElement.style.visibility='';}
+  });
+})();
+</script>
+<style>
+:root{
+  --green:#003C1C; --green-light:#00A858; --glow:#00E67A;
+  --bg:#EEF1ED; --ink:#0a0a0a; --muted:rgba(0,0,0,.62);
+  --card:rgba(255,255,255,.72); --line:rgba(0,60,28,.12);
+  --red:#C1453B; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+header{
+  position:relative; padding:56px 0 40px; overflow:hidden;
+  background:
+    radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
+    radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
+    var(--bg);
+  border-bottom:1px solid var(--line);
+}
+h1{font-size:30px;font-weight:700;letter-spacing:-.02em}
+h1 .ver{
+  background:linear-gradient(90deg,var(--green-light),var(--glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.badge{
+  display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 12px;border-radius:999px;margin-left:12px;vertical-align:middle;
+  background:rgba(0,168,88,.12);color:var(--green);border:1px solid rgba(0,168,88,.35);
+}
+.tagline{font-size:17px;color:var(--muted);margin:12px 0 0}
+.back{font-size:13px;margin-bottom:20px;display:inline-block;color:var(--green-light);text-decoration:none}
+main{padding:44px 0 24px}
+section{margin-bottom:52px}
+h2{font-size:23px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:22px;font-size:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{
+  background:var(--card);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
+  box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px;
+}
+.card h3{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--green)}
+.card p{font-size:14px;color:var(--muted)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+th,td{padding:12px 16px;text-align:left;font-size:14px;border-bottom:1px solid var(--line)}
+th{background:rgba(0,60,28,.06);font-weight:600;color:var(--green)}
+tr:last-child td{border-bottom:none}
+.ticket{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:600;color:var(--green-light);white-space:nowrap}
+.notice{
+  margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
+  background:rgba(193,69,59,.08);border:1px solid rgba(193,69,59,.3);color:#7a2b24;
+}
+.notice b{color:var(--red)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.kpi{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.kpi .num{
+  font-size:26px;font-weight:700;letter-spacing:-.02em;
+  background:linear-gradient(90deg,var(--green-light),var(--glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.kpi .lbl{font-size:13px;color:var(--muted);margin-top:4px}
+.check-block{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.check-block h3{font-size:17px;color:var(--green);margin-bottom:4px}
+.check-block .ctx{font-size:13px;color:var(--muted);margin-bottom:14px}
+label.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:6px 0;cursor:pointer}
+label.chk input{accent-color:var(--green-light);margin-top:3px;flex-shrink:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;background:rgba(0,60,28,.07);padding:2px 6px;border-radius:6px}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;font-size:13px;color:var(--muted)}
+footer b{color:var(--green)}
+@media (max-width:600px){h1{font-size:24px}.badge{display:block;margin:8px 0 0;width:max-content}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html">← Retour au hub</a>
+    <h1>Proxima Sites <span class="ver">Fix webhook Stripe</span><span class="badge">Récap équipe · 15 juillet 2026</span></h1>
+    <p class="tagline">Les notifications de paiement Stripe échouaient depuis le 9 juillet sur <code>go.proxima.green</code>. Cause identifiée, corrigée, déployée et vérifiée dans la journée.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>🚨 Le problème</h2>
+    <p class="sub">Stripe nous a alertés par email : impossible de livrer les événements webhook (confirmations de paiement, factures d'abonnement) à notre serveur.</p>
+    <div class="cards">
+      <div class="card"><h3>12 tentatives échouées</h3><p>Depuis le 9 juillet à 15h03 UTC, toutes les notifications envoyées par Stripe vers <code>go.proxima.green/api/stripe-webhook</code> étaient rejetées.</p></div>
+      <div class="card"><h3>Échéance au 18 juillet</h3><p>Stripe menaçait de désactiver définitivement l'endpoint le 18 juillet — les paiements Checkout n'auraient plus créé les comptes clients automatiquement.</p></div>
+      <div class="card"><h3>Impact potentiel</h3><p>Un achat via la landing n'aurait plus déclenché la création du client dans notre base (PocketBase) ni le suivi d'abonnement.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🔎 Diagnostic</h2>
+    <p class="sub">Le serveur était bien en ligne (DNS, certificat et temps de réponse OK) — le problème était dans notre code.</p>
+    <table>
+      <tr><th>Sujet</th><th>Constat</th></tr>
+      <tr><td class="ticket">Cause n°1</td><td>Le serveur transformait le message de Stripe (parsing JSON global) <b>avant</b> de vérifier sa signature de sécurité. La vérification, qui exige le message brut intact, échouait donc à 100&nbsp;% — chaque webhook était rejeté.</td></tr>
+      <tr><td class="ticket">Cause n°2</td><td>Le serveur attendait la fin d'écritures en base de données avant de répondre à Stripe, avec un risque de dépassement du délai imparti (timeout) les jours de lenteur.</td></tr>
+    </table>
+    <div class="notice"><b>Bonne nouvelle :</b> aucun paiement n'a été perdu — Stripe encaisse normalement même quand le webhook échoue. Seule la création automatique des fiches clients était en panne.</div>
+  </section>
+
+  <section>
+    <h2>🔧 Ce qui a été fait</h2>
+    <div class="cards">
+      <div class="card"><h3>Message brut préservé</h3><p>La route du webhook est désormais exclue du parsing JSON global : Stripe est vérifié sur le message original, la signature passe.</p></div>
+      <div class="card"><h3>Réponse immédiate</h3><p>Le serveur confirme la réception à Stripe tout de suite, puis fait le travail en base en arrière-plan. Plus aucun risque de timeout.</p></div>
+      <div class="card"><h3>Déployé et vérifié</h3><p>Correctif poussé sur GitHub, redéployé automatiquement (Coolify) et testé en production : l'endpoint répond correctement et la vérification de signature est active.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>📊 En chiffres</h2>
+    <div class="kpis">
+      <div class="kpi"><div class="num">6 jours</div><div class="lbl">de webhooks en échec (9 → 15 juillet)</div></div>
+      <div class="kpi"><div class="num">1 commit</div><div class="lbl">correctif ciblé sur le serveur API</div></div>
+      <div class="kpi"><div class="num">2 min 30</div><div class="lbl">entre le push et la mise en prod</div></div>
+      <div class="kpi"><div class="num">3 jours</div><div class="lbl">de marge gagnée avant la désactivation Stripe</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>✅ Reste à faire</h2>
+    <div class="check-block">
+      <h3>Côté Dashboard Stripe (Cédric)</h3>
+      <p class="ctx">Développeurs → Webhooks → endpoint <code>go.proxima.green/api/stripe-webhook</code>.</p>
+      <label class="chk"><input type="checkbox"> Vérifier qu'une nouvelle livraison passe en 200 (Stripe réessaie seul, ou « Renvoyer »)</label>
+      <label class="chk"><input type="checkbox"> Renvoyer les événements échoués depuis le 9 juillet, surtout les <code>checkout.session.completed</code></label>
+      <label class="chk"><input type="checkbox"> Contrôler que les éventuels achats de la période ont bien leur fiche client en base</label>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Proxima Sites — fix webhook Stripe</b> · récap du 15 juillet 2026<br>
+    Diffusion interne équipe — merci de ne pas partager ce lien hors de l'équipe. Retours : cedric@proxima.green
+  </div>
+</footer>
+
+</body>
+</html>
