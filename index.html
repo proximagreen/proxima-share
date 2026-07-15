@@ -54,8 +54,9 @@ body.locked>*:not(#gate){display:none}
   display:flex;align-items:center;gap:4px;padding:6px;border-radius:var(--radius-pill);
   background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.5);box-shadow:var(--shadow-card);
-  opacity:.92;transition:opacity .25s, box-shadow .25s}
-.pill:hover,.pill:focus-within{opacity:1;box-shadow:0 0 24px rgba(0,230,122,.25)}
+  opacity:.92;transition:opacity .25s, box-shadow .3s, border-color .3s}
+.pill:hover,.pill:focus-within{opacity:1;border-color:rgba(0,230,122,.75);
+  box-shadow:0 0 0 1px rgba(0,230,122,.55), 0 0 22px rgba(0,230,122,.45), inset 0 0 12px rgba(0,230,122,.08)}
 .pill a,.pill button{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;min-height:40px;
   border-radius:var(--radius-pill);border:none;background:none;cursor:pointer;text-decoration:none;
   font:600 14px var(--font-sans);color:var(--proxima-green);transition:background .2s}
@@ -225,6 +226,46 @@ footer b{color:var(--proxima-green)}
         <h3>Refonte du site de partage</h3>
         <p>Espaces par projet, récaps en présentation, accès protégé, publication automatisée.</p>
         <span class="open">Ouvrir la présentation →</span>
+      </div>
+    </a>
+    <a class="card a d2" data-p="chat" href="presentation-okf.html">
+      <div class="cover"><span class="status"><i></i>Présentation</span>
+        <img src="https://images.unsplash.com/photo-1523961131990-5ea7c61b2107?w=900&q=70&auto=format&fit=crop" alt="" loading="lazy"></div>
+      <div class="body">
+        <span class="date">Juillet 2026 · Chat</span>
+        <h3>Bundle OKF — la présentation</h3>
+        <p>Le bundle d'entreprise Proxima Chat, expliqué de bout en bout.</p>
+        <span class="open">Ouvrir la présentation →</span>
+      </div>
+    </a>
+    <a class="card a d3" data-p="chat" href="blueprint-okf.html">
+      <div class="cover"><span class="status"><i></i>Runbook A4</span>
+        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=900&q=70&auto=format&fit=crop" alt="" loading="lazy"></div>
+      <div class="body">
+        <span class="date">Juillet 2026 · Chat</span>
+        <h3>Bundle OKF — le runbook</h3>
+        <p>Le bundle MVP : la procédure opérationnelle, imprimable en A4.</p>
+        <span class="open">Ouvrir le runbook →</span>
+      </div>
+    </a>
+    <a class="card a d2" data-p="meet" href="presentation-ota.html">
+      <div class="cover"><span class="status"><i></i>Présentation</span>
+        <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&q=70&auto=format&fit=crop" alt="" loading="lazy"></div>
+      <div class="body">
+        <span class="date">Juillet 2026 · Meet</span>
+        <h3>Release &amp; OTA — la présentation</h3>
+        <p>Une mise à jour casse chez un client : le circuit de release et de retour arrière, expliqué.</p>
+        <span class="open">Ouvrir la présentation →</span>
+      </div>
+    </a>
+    <a class="card a d3" data-p="meet" href="blueprint-ota.html">
+      <div class="cover"><span class="status"><i></i>Runbook A4</span>
+        <img src="https://images.unsplash.com/photo-1526628953301-3e589a6a8b74?w=900&q=70&auto=format&fit=crop" alt="" loading="lazy"></div>
+      <div class="body">
+        <span class="date">Juillet 2026 · Meet</span>
+        <h3>Release &amp; OTA — le runbook</h3>
+        <p>Que faire quand une version casse : la procédure opérationnelle, imprimable en A4.</p>
+        <span class="open">Ouvrir le runbook →</span>
       </div>
     </a>
     <a class="card a d3" data-p="meet" href="meet/build-0.5.38.html">

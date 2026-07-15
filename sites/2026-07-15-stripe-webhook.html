@@ -156,8 +156,9 @@ body.locked>*:not(#gate){display:none!important}
   display:flex;align-items:center;gap:4px;padding:6px;border-radius:var(--radius-pill);
   background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   border:1px solid rgba(255,255,255,.5);box-shadow:var(--shadow-card);
-  opacity:.92;transition:opacity .25s, box-shadow .25s;max-width:calc(100vw - 20px)}
-.pillnav:hover,.pillnav:focus-within{opacity:1;box-shadow:0 0 24px rgba(0,230,122,.25)}
+  opacity:.92;transition:opacity .25s, box-shadow .3s, border-color .3s;max-width:calc(100vw - 20px)}
+.pillnav:hover,.pillnav:focus-within{opacity:1;border-color:rgba(0,230,122,.75);
+  box-shadow:0 0 0 1px rgba(0,230,122,.55), 0 0 22px rgba(0,230,122,.45), inset 0 0 12px rgba(0,230,122,.08)}
 .pillnav a,.pillnav button{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;min-height:40px;
   border-radius:var(--radius-pill);border:none;background:none;cursor:pointer;text-decoration:none;
   font:600 14px var(--font-sans);color:var(--proxima-green);transition:background .2s;white-space:nowrap}
