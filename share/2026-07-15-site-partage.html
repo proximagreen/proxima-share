@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proxima Share — Nouveau site de partage équipe (15 juillet 2026)</title>
+<script>
+(function(){
+  var K='px-share-gate';
+  if(sessionStorage.getItem(K)==='ok') return;
+  document.documentElement.style.visibility='hidden';
+  window.addEventListener('DOMContentLoaded',function(){
+    var p=prompt('Accès équipe Proxima — mot de passe :')||'';
+    if(btoa(p)==='UHJveGltYTIwMjY='){sessionStorage.setItem(K,'ok');document.documentElement.style.visibility='';}
+    else{document.body.innerHTML='<p style="font-family:sans-serif;padding:40px">Accès réservé à l\'équipe Proxima.</p>';document.documentElement.style.visibility='';}
+  });
+})();
+</script>
+<style>
+:root{
+  --green:#003C1C; --green-light:#00A858; --glow:#00E67A;
+  --bg:#EEF1ED; --ink:#0a0a0a; --muted:rgba(0,0,0,.62);
+  --card:rgba(255,255,255,.72); --line:rgba(0,60,28,.12);
+  --red:#C1453B; --radius:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
+}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+header{
+  position:relative; padding:56px 0 40px; overflow:hidden;
+  background:
+    radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
+    radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
+    var(--bg);
+  border-bottom:1px solid var(--line);
+}
+h1{font-size:30px;font-weight:700;letter-spacing:-.02em}
+h1 .ver{
+  background:linear-gradient(90deg,var(--green-light),var(--glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.badge{
+  display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 12px;border-radius:999px;margin-left:12px;vertical-align:middle;
+  background:rgba(0,168,88,.12);color:var(--green);border:1px solid rgba(0,168,88,.35);
+}
+.tagline{font-size:17px;color:var(--muted);margin:12px 0 0}
+.back{font-size:13px;margin-bottom:20px;display:inline-block;color:var(--green-light);text-decoration:none}
+main{padding:44px 0 24px}
+section{margin-bottom:52px}
+h2{font-size:23px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+.sub{color:var(--muted);margin-bottom:22px;font-size:15px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.card{
+  background:var(--card);backdrop-filter:blur(16px);
+  border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
+  box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px;
+}
+.card h3{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--green)}
+.card p{font-size:14px;color:var(--muted)}
+.notice{
+  margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
+  background:rgba(193,69,59,.08);border:1px solid rgba(193,69,59,.3);color:#7a2b24;
+}
+.notice b{color:var(--red)}
+.check-block{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.check-block h3{font-size:17px;color:var(--green);margin-bottom:4px}
+.check-block .ctx{font-size:13px;color:var(--muted);margin-bottom:14px}
+label.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:6px 0;cursor:pointer}
+label.chk input{accent-color:var(--green-light);margin-top:3px;flex-shrink:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;background:rgba(0,60,28,.07);padding:2px 6px;border-radius:6px}
+/* Timeline */
+.timeline{position:relative;padding-left:26px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;
+  background:linear-gradient(var(--green-light),var(--glow))}
+.tl-item{position:relative;margin-bottom:22px}
+.tl-dot{position:absolute;left:-26px;top:4px;width:14px;height:14px;border-radius:50%;
+  background:var(--glow);border:3px solid var(--bg);box-shadow:0 0 10px rgba(0,230,122,.5)}
+.tl-date{font:600 11px system-ui;letter-spacing:.04em;text-transform:uppercase;color:var(--green-light);display:block}
+.tl-item p{font-size:14px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding:32px 0 48px;font-size:13px;color:var(--muted)}
+footer b{color:var(--green)}
+@media (max-width:600px){h1{font-size:24px}.badge{display:block;margin:8px 0 0;width:max-content}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html">← Retour au hub</a>
+    <h1>Proxima Share <span class="ver">Nouveau site de partage équipe</span><span class="badge">Récap équipe · 15 juillet 2026</span></h1>
+    <p class="tagline">Le site que vous êtes en train de lire a été refondu : un hub par projet, un accès protégé, et une publication automatisée des récaps de chantiers.</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section>
+    <h2>✨ Ce qui change pour l'équipe</h2>
+    <p class="sub">Un seul lien à retenir, un mot de passe d'équipe (demandez-le à Cédric), et un onglet par projet.</p>
+    <div class="cards">
+      <div class="card"><h3>Hub par projet</h3><p>La page d'accueil regroupe désormais quatre onglets : Proxima Meet, Proxima Sites, Proxima Chat et Proxima Share. Chaque récap ou build de test y est classé et daté.</p></div>
+      <div class="card"><h3>Accès protégé</h3><p>Un mot de passe d'équipe est demandé à l'entrée. C'est un verrou de discrétion (pas un coffre-fort) : aucun secret ne sera jamais publié ici.</p></div>
+      <div class="card"><h3>Publication automatisée</h3><p>Une commande interne (« /comteam ») génère et publie ces pages de récap directement depuis l'outil de développement — les comptes-rendus arriveront plus vite et plus régulièrement.</p></div>
+      <div class="card"><h3>Graphiques &amp; présentations</h3><p>Les prochains récaps pourront inclure graphiques (barres, courbes, donut, radar, timeline…) et un mode diaporama swipable sur mobile — sans aucune dépendance externe.</p></div>
+      <div class="card"><h3>Anciennes pages conservées</h3><p>Le build de test Proxima Meet 0.5.38 reste accessible, désormais rangé dans l'onglet Meet.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🗓️ La journée en bref</h2>
+    <div class="timeline">
+      <div class="tl-item"><span class="tl-dot"></span>
+        <div><span class="tl-date">Matin</span><b>Fix du webhook Stripe sur go.proxima.green</b>
+        <p>Diagnostic, correctif et déploiement — voir le récap dédié dans l'onglet Proxima Sites.</p></div></div>
+      <div class="tl-item"><span class="tl-dot"></span>
+        <div><span class="tl-date">Après-midi</span><b>Refonte du site de partage</b>
+        <p>Hub à onglets par projet, protection par mot de passe, conservation des pages existantes.</p></div></div>
+      <div class="tl-item"><span class="tl-dot"></span>
+        <div><span class="tl-date">Après-midi</span><b>Outillage de publication</b>
+        <p>Création des commandes internes de génération de récaps, avec charte graphique, bibliothèque de graphiques validée pour l'accessibilité (daltonisme, contraste) et mode diaporama.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>✅ Reste à faire</h2>
+    <div class="check-block">
+      <h3>Mise en ligne publique du site (bloquant)</h3>
+      <p class="ctx">Le site est prêt dans le dépôt, mais GitHub Pages n'est pas encore activé — seul l'owner de l'organisation peut le faire.</p>
+      <label class="chk"><input type="checkbox"> <span><b>plmproxima</b> : activer GitHub Pages sur le dépôt <code>proxima-share</code> (Settings → Pages → branche <code>main</code>, dossier <code>/</code>), ou donner le rôle admin à Cédric sur ce dépôt</span></label>
+      <label class="chk"><input type="checkbox"> Diffuser le lien + mot de passe à l'équipe une fois le site en ligne</label>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Proxima Share — refonte du site de partage</b> · récap du 15 juillet 2026<br>
+    Diffusion interne équipe — merci de ne pas partager ce lien hors de l'équipe. Retours : cedric@proxima.green
+  </div>
+</footer>
+
+</body>
+</html>
