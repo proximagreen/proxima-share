@@ -5,18 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Proxima Sites — Fix webhook Stripe (15 juillet 2026)</title>
-<script>
-(function(){
-  var K='px-share-gate';
-  if(sessionStorage.getItem(K)==='ok') return;
-  document.documentElement.style.visibility='hidden';
-  window.addEventListener('DOMContentLoaded',function(){
-    var p=prompt('Accès équipe Proxima — mot de passe :')||'';
-    if(btoa(p)==='UHJveGltYTIwMjY='){sessionStorage.setItem(K,'ok');document.documentElement.style.visibility='';}
-    else{document.body.innerHTML='<p style="font-family:sans-serif;padding:40px">Accès réservé à l\'équipe Proxima.</p>';document.documentElement.style.visibility='';}
-  });
-})();
-</script>
+<script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.5.0/dist/chart.umd.min.js"></script>
 <style>
 :root{
   --proxima-green:#003C1C; --proxima-green-light:#00A858; --proxima-green-glow:#00E67A;
@@ -133,10 +122,102 @@ code{font-family:var(--font-mono);font-size:.85em;background:var(--green-tint-06
   .dots,.navs,.counter,.hint{display:none}
   h1{font-size:38px}h2{font-size:28px}
   .a{opacity:1;transform:none}.gauge .arc{stroke-dasharray:var(--val) 100}
+  .slide:first-child{padding-top:84px}
 }
+/* ═══ Gate v2 ═══ */
+#gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:
+  radial-gradient(700px circle at 15% 12%, rgba(0,230,122,.14), transparent 60%),
+  radial-gradient(560px circle at 88% 90%, rgba(0,168,88,.10), transparent 55%), var(--bg)}
+#gate .panel{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);
+  border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,.08);padding:38px 34px;text-align:center}
+#gate .mark{width:56px;height:56px;border-radius:16px;background:var(--proxima-green);margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(0,230,122,.35)}
+#gate h1{font-size:26px;line-height:1.2}
+#gate .gsub{font-size:14px;color:var(--fg3);margin:6px 0 26px}
+#gate input[type=password]{width:100%;padding:14px 16px;font:inherit;font-size:16px;
+  border:1px solid var(--border-strong);border-radius:10px;outline:none;text-align:center;
+  letter-spacing:.08em;transition:.2s}
+#gate input[type=password]:focus{border-color:var(--proxima-green-light);box-shadow:0 0 0 3px rgba(0,230,122,.18)}
+#gate button{width:100%;margin-top:14px;padding:14px;font:inherit;font-size:16px;font-weight:700;
+  color:#fff;background:var(--proxima-green);border:none;border-radius:10px;cursor:pointer;
+  transition:box-shadow .25s, transform .15s}
+#gate button:hover{box-shadow:0 0 26px rgba(0,230,122,.45);transform:translateY(-1px)}
+#gate label{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;
+  font-size:13.5px;color:var(--fg3);cursor:pointer}
+#gate input[type=checkbox]{width:16px;height:16px;accent-color:var(--proxima-green-light)}
+#gate .err{display:none;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--proxima-red)}
+#gate.wrong .err{display:block}
+#gate.wrong .panel{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+body.locked>*:not(#gate){display:none!important}
+/* ═══ Pill nav flottante ═══ */
+.pillnav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:60;
+  display:flex;align-items:center;gap:4px;padding:6px;border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.5);box-shadow:var(--shadow-card);
+  opacity:.92;transition:opacity .25s, box-shadow .25s;max-width:calc(100vw - 20px)}
+.pillnav:hover,.pillnav:focus-within{opacity:1;box-shadow:0 0 24px rgba(0,230,122,.25)}
+.pillnav a,.pillnav button{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;min-height:40px;
+  border-radius:var(--radius-pill);border:none;background:none;cursor:pointer;text-decoration:none;
+  font:600 14px var(--font-sans);color:var(--proxima-green);transition:background .2s;white-space:nowrap}
+.pillnav a:hover,.pillnav button:hover{background:var(--green-tint-06)}
+@media (min-width:700px){.pillnav{opacity:.55}}
+/* ═══ Toast + overlay détails ═══ */
+#toast{position:fixed;bottom:24px;left:50%;transform:translate(-50%,90px);z-index:80;
+  background:var(--proxima-green);color:#fff;font:600 14px var(--font-sans);
+  padding:12px 22px;border-radius:var(--radius-pill);box-shadow:0 0 24px rgba(0,230,122,.4);
+  transition:transform .35s cubic-bezier(.16,1,.3,1)}
+#toast.show{transform:translate(-50%,0)}
+[data-detail]{cursor:pointer}
+.more{display:inline-flex;align-items:center;gap:5px;margin-top:2px;
+  font:600 12.5px var(--font-sans);color:var(--proxima-green-light)}
+#sheetWrap{position:fixed;inset:0;z-index:90;display:none}
+#sheetWrap.open{display:block}
+#sheetWrap .scrim{position:absolute;inset:0;background:rgba(0,20,10,.45);
+  opacity:0;transition:opacity .3s}
+#sheetWrap.in .scrim{opacity:1}
+#sheet{position:absolute;left:0;right:0;bottom:0;max-height:76dvh;overflow-y:auto;
+  background:var(--surface);border-radius:24px 24px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,.18);
+  padding:18px 24px 34px;transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+#sheetWrap.in #sheet{transform:none}
+#sheet .grab{width:44px;height:5px;border-radius:3px;background:var(--border-strong);margin:0 auto 18px}
+#sheet h3{font-size:21px;font-weight:800;letter-spacing:var(--tracking-brand);color:var(--proxima-green);margin-bottom:10px}
+#sheet p{font-size:15.5px;color:var(--fg2)}
+#sheet .close{position:absolute;top:14px;right:16px;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--border);background:var(--surface-muted);cursor:pointer;
+  font-size:16px;color:var(--fg3)}
+@media (min-width:700px){#sheet{left:50%;right:auto;transform:translate(-50%,100%);width:560px;
+  border-radius:24px;bottom:32px}
+  #sheetWrap.in #sheet{transform:translate(-50%,0)}}
 </style>
 </head>
-<body>
+<body class="locked">
+
+<div id="gate">
+  <form class="panel" id="gateForm">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E67A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 2 l4 4 -4 4"/><path d="M3 11 V9 a4 4 0 0 1 4-4 h14"/>
+        <path d="M7 22 l-4-4 4-4"/><path d="M21 13 v2 a4 4 0 0 1 -4 4 H3"/>
+      </svg>
+    </div>
+    <h1>Proxima</h1>
+    <p class="gsub">Partage équipe — accès réservé</p>
+    <input type="password" id="pw" placeholder="Mot de passe d'équipe" autocomplete="current-password">
+    <button type="submit">Entrer</button>
+    <label><input type="checkbox" id="remember"> Se souvenir de moi sur cet appareil</label>
+    <p class="err">Mot de passe incorrect.</p>
+  </form>
+</div>
+
+<nav class="pillnav" aria-label="Navigation">
+  <a href="../index.html">← Accueil</a>
+  <button type="button" data-share aria-label="Partager cette page">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v14"/></svg>
+    Partager
+  </button>
+</nav>
 
 <div class="deck" id="deck">
 
@@ -175,6 +256,10 @@ code{font-family:var(--font-mono);font-size:.85em;background:var(--green-tint-06
         <rect x="392" y="34" width="234" height="52" rx="14" fill="#003C1C"/>
         <text x="509" y="66" text-anchor="middle" font-size="17" font-weight="700" fill="#FFFFFF">go.proxima.green</text>
       </svg>
+      <div class="a d3" style="margin-top:26px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);padding:18px 20px 8px">
+        <p style="font:600 13px var(--font-sans);color:var(--fg3);margin-bottom:6px">Livraisons de webhooks — 9 → 15 juillet (répartition indicative des 12 échecs)</p>
+        <div style="position:relative;height:170px"><canvas id="whChart" role="img" aria-label="Tentatives de webhook rejetées par jour, puis acceptées après le fix du 15 juillet"></canvas></div>
+      </div>
       <p class="cap a d3" style="color:var(--proxima-red);font-weight:600">Désactivation définitive annoncée par Stripe le 18 juillet.</p>
     </div>
   </section>
@@ -240,20 +325,22 @@ code{font-family:var(--font-mono);font-size:.85em;background:var(--green-tint-06
       <p class="kicker a">5 · Reste à faire</p>
       <h2 class="a">Trois vérifications dans le Dashboard Stripe</h2>
       <div class="bento">
-        <div class="cell wide a d1">
+        <div class="cell wide a d1" data-detail="Renvoyer les événements échoués|Dashboard Stripe → Développeurs → Webhooks → endpoint go.proxima.green/api/stripe-webhook → onglet « Tentatives ». Filtrer depuis le 9 juillet et cliquer « Renvoyer » sur chaque événement, en priorité les checkout.session.completed : ce sont eux qui créent les fiches clients." role="button" tabindex="0">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
           <b>Renvoyer les événements échoués depuis le 9 juillet</b>
           <span class="note">Surtout les <code>checkout.session.completed</code></span>
+          <span class="more">+ détails</span>
         </div>
         <div class="cell a d2">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
           <b>Vérifier un 200</b>
           <span class="note">Sur une nouvelle livraison</span>
         </div>
-        <div class="cell wide a d3">
+        <div class="cell wide a d3" data-detail="Contrôler les fiches clients|Dans PocketBase, vérifier que chaque paiement encaissé entre le 9 et le 15 juillet a bien sa fiche client (collection « clients ») avec plan, nombre de postes et statut actif. Les événements renvoyés depuis Stripe recréent les fiches manquantes automatiquement." role="button" tabindex="0">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
           <b>Contrôler les fiches clients de la période</b>
           <span class="note">Base PocketBase — achats du 9 au 15 juillet</span>
+          <span class="more">+ détails</span>
         </div>
         <div class="cell a d3">
           <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12l5 5 9-9"/></svg>
@@ -273,6 +360,17 @@ code{font-family:var(--font-mono);font-size:.85em;background:var(--green-tint-06
 </div>
 <nav class="dots" id="dots" aria-label="Progression"></nav>
 <div class="counter" id="counter"></div>
+
+<div id="toast" role="status"></div>
+<div id="sheetWrap" aria-modal="true" role="dialog">
+  <div class="scrim"></div>
+  <div id="sheet">
+    <div class="grab" aria-hidden="true"></div>
+    <button class="close" aria-label="Fermer">✕</button>
+    <h3 id="sheetTitle"></h3>
+    <p id="sheetText"></p>
+  </div>
+</div>
 
 <script>
 const deck=document.getElementById('deck'),dots=document.getElementById('dots'),
@@ -309,6 +407,78 @@ slides.forEach(s=>io.observe(s));
 if(matchMedia('(prefers-reduced-motion: reduce)').matches){
   slides.forEach(s=>{s.classList.add('is-active');
     s.querySelectorAll('[data-count]').forEach(el=>el.textContent=el.dataset.count)})}
+
+/* ═══ Gate v2 — SHA-256 salé ═══ */
+const HASH='d55d1f7a8b1e4d53c23eeaa57e73fda17fdffde86f78c2471a170575c3bcdcc1', SALT='proxima-share-v1:';
+async function sha(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function unlock(){document.body.classList.remove('locked');
+  const g=document.getElementById('gate');if(g)g.remove();sync()}
+if(localStorage.getItem('px-gate2')===HASH||sessionStorage.getItem('px-gate2')===HASH){unlock()}
+document.getElementById('gateForm')?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const h=await sha(SALT+document.getElementById('pw').value);
+  if(h===HASH){
+    (document.getElementById('remember').checked?localStorage:sessionStorage).setItem('px-gate2',HASH);
+    unlock()
+  }else{
+    const g=document.getElementById('gate');g.classList.remove('wrong');void g.offsetWidth;g.classList.add('wrong');
+    document.getElementById('pw').select()
+  }
+});
+/* ═══ Partage ═══ */
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400)}
+document.querySelectorAll('[data-share]').forEach(b=>b.addEventListener('click',async()=>{
+  const data={title:document.title,url:location.href};
+  if(navigator.share){try{await navigator.share(data)}catch(e){}}
+  else{
+    try{await navigator.clipboard.writeText(location.href);toast('Lien copié — collez-le dans Signal, mail…')}
+    catch(e){location.href='mailto:?subject='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(location.href)}
+  }
+}));
+/* ═══ Overlay détails (bottom-sheet) ═══ */
+const wrap=document.getElementById('sheetWrap');
+function openSheet(title,text){
+  document.getElementById('sheetTitle').textContent=title;
+  document.getElementById('sheetText').textContent=text;
+  wrap.classList.add('open');requestAnimationFrame(()=>wrap.classList.add('in'))}
+function closeSheet(){wrap.classList.remove('in');setTimeout(()=>wrap.classList.remove('open'),320)}
+document.querySelectorAll('[data-detail]').forEach(el=>{
+  const fire=()=>{const [t,x]=el.dataset.detail.split('|');openSheet(t,x)};
+  el.addEventListener('click',fire);
+  el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fire()}});
+});
+wrap.querySelector('.scrim').addEventListener('click',closeSheet);
+wrap.querySelector('.close').addEventListener('click',closeSheet);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&wrap.classList.contains('open'))closeSheet()});
+/* ═══ Chart.js — livraisons webhook ═══ */
+let chartDone=false;
+function initChart(){
+  if(chartDone)return;
+  if(typeof Chart==='undefined'){setTimeout(initChart,300);return}
+  chartDone=true;
+  new Chart(document.getElementById('whChart'),{
+    type:'bar',
+    data:{labels:['9 juil','10','11','12','13','14','15 juil'],
+      datasets:[
+        {label:'Rejetés',data:[3,2,2,2,2,1,0],backgroundColor:'#C1453B',borderRadius:6,maxBarThickness:46},
+        {label:'Acceptés (après fix)',data:[0,0,0,0,0,0,3],backgroundColor:'#00A858',borderRadius:6,maxBarThickness:46}
+      ]},
+    options:{responsive:true,maintainAspectRatio:false,
+      animation:{duration:900,easing:'easeOutQuart'},
+      scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#6B7280',font:{size:12}}},
+        y:{stacked:true,beginAtZero:true,ticks:{stepSize:1,color:'#6B7280',font:{size:12}},
+           grid:{color:'rgba(0,60,28,.08)'}}},
+      plugins:{legend:{position:'bottom',labels:{color:'rgba(0,0,0,.65)',usePointStyle:true,
+        pointStyleWidth:8,boxHeight:8,font:{size:12,weight:600}}},
+        tooltip:{backgroundColor:'#003C1C',cornerRadius:8,padding:10}}}
+  });
+}
+const chartSlide=document.getElementById('whChart').closest('.slide');
+const ioChart=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){initChart();ioChart.disconnect()}}),{root:deck,threshold:.4});
+ioChart.observe(chartSlide);
 </script>
 
 </body>
