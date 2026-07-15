@@ -25,209 +25,250 @@
   --red:#C1453B; --radius:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
   font-family:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
+  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6; overflow:hidden;
 }
-.wrap{max-width:960px;margin:0 auto;padding:0 24px}
-/* Hero */
-header{
-  position:relative; padding:64px 0 48px; overflow:hidden;
-  background:
-    radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
-    radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
-    var(--bg);
-  border-bottom:1px solid var(--line);
-}
-header img.logo{height:56px;margin-bottom:24px}
-h1{font-size:32px;font-weight:700;letter-spacing:-.02em}
-h1 .ver{
-  background:linear-gradient(90deg,var(--green-light),var(--glow));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.badge{
-  display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
-  padding:4px 12px;border-radius:999px;margin-left:12px;vertical-align:middle;
-  background:rgba(0,168,88,.12);color:var(--green);border:1px solid rgba(0,168,88,.35);
-}
-.tagline{font-size:18px;color:var(--muted);margin:12px 0 32px}
-.dl-row{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:16px}
-a.btn{
-  display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;
+.deck{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:100dvh;
+  scroll-behavior:smooth;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;height:100dvh;
+  overflow-y:auto;padding:56px 24px 96px;display:flex;flex-direction:column;justify-content:center}
+.slide>.wrap{max-width:860px;margin:0 auto;width:100%}
+.slide.hero{background:
+  radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
+  radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
+  var(--bg)}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green-light);margin-bottom:10px}
+h1{font-size:34px;font-weight:700;letter-spacing:-.02em}
+h1 .ver{background:linear-gradient(90deg,var(--green-light),var(--glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:27px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.badge{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 12px;border-radius:999px;background:rgba(0,168,88,.12);color:var(--green);
+  border:1px solid rgba(0,168,88,.35);margin-bottom:16px}
+.tagline{font-size:18px;color:var(--muted);margin:14px 0 0}
+.sub{color:var(--muted);margin-bottom:22px;font-size:15px}
+.back{font-size:13px;color:var(--green-light);text-decoration:none;display:inline-block;margin-bottom:18px}
+.dl-row{display:flex;flex-wrap:wrap;gap:16px;margin:26px 0 12px}
+a.btn{display:inline-flex;flex-direction:column;gap:2px;text-decoration:none;
   padding:14px 26px;border-radius:12px;font-weight:600;font-size:16px;
   background:var(--green);color:#fff;border:1px solid var(--green);
   box-shadow:0 0 0 0 rgba(0,230,122,.35),0 0 18px rgba(0,230,122,.20);
-  transition:box-shadow .25s, transform .15s;
-}
+  transition:box-shadow .25s, transform .15s}
 a.btn:hover{box-shadow:0 0 0 3px rgba(0,230,122,.15),0 0 32px rgba(0,230,122,.45);transform:translateY(-1px)}
 a.btn small{font-weight:400;font-size:12px;opacity:.75}
 .sysreq{font-size:13px;color:var(--muted)}
-.sysreq a{color:var(--green-light)}
-/* Sections */
-main{padding:48px 0 24px}
-section{margin-bottom:56px}
-h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
-.sub{color:var(--muted);margin-bottom:24px;font-size:15px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{
-  background:var(--card);backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
-  box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px;
-}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.4);
+  border-radius:var(--radius);box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px}
 .card h3{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--green)}
 .card p{font-size:14px;color:var(--muted)}
-/* Table bugs */
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,.06)}
 th,td{padding:12px 16px;text-align:left;font-size:14px;border-bottom:1px solid var(--line)}
 th{background:rgba(0,60,28,.06);font-weight:600;color:var(--green)}
 tr:last-child td{border-bottom:none}
-.ticket{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:600;color:var(--green-light);white-space:nowrap}
-.notice{
-  margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
-  background:rgba(193,69,59,.08);border:1px solid rgba(193,69,59,.3);color:#7a2b24;
-}
+.ticket{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600;color:var(--green-light);white-space:nowrap}
+.notice{margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
+  background:rgba(193,69,59,.08);border:1px solid rgba(193,69,59,.3);color:#7a2b24}
 .notice b{color:var(--red)}
-/* KPI */
-.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
-.kpi{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,.06)}
-.kpi .num{
-  font-size:28px;font-weight:700;letter-spacing:-.02em;
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.kpi{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
+  padding:22px;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.kpi .num{font-size:28px;font-weight:700;letter-spacing:-.02em;
   background:linear-gradient(90deg,var(--green-light),var(--glow));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
+  -webkit-background-clip:text;background-clip:text;color:transparent}
 .kpi .lbl{font-size:13px;color:var(--muted);margin-top:4px}
-/* Checklists */
-.check-block{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.check-block{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
+  padding:24px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
 .check-block h3{font-size:17px;color:var(--green);margin-bottom:4px}
 .check-block .ctx{font-size:13px;color:var(--muted);margin-bottom:14px}
 label.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:6px 0;cursor:pointer}
 label.chk input{accent-color:var(--green-light);margin-top:3px;flex-shrink:0}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;background:rgba(0,60,28,.07);padding:2px 6px;border-radius:6px}
-.gatekeeper{
-  margin-top:8px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
-  background:rgba(184,134,11,.08);border:1px solid rgba(184,134,11,.3);
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:rgba(0,60,28,.07);padding:2px 6px;border-radius:6px}
+.gatekeeper{margin-top:14px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
+  background:rgba(184,134,11,.08);border:1px solid rgba(184,134,11,.3)}
+.foot{font-size:12px;color:var(--muted);margin-top:26px}
+.dots{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:40}
+.dots button{width:10px;height:10px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(0,60,28,.22);transition:.2s;padding:0}
+.dots button.on{background:var(--glow);box-shadow:0 0 8px rgba(0,230,122,.6)}
+.counter{position:fixed;bottom:16px;right:20px;font:600 12px system-ui;color:var(--muted);z-index:40}
+.nav-btn{position:fixed;top:50%;transform:translateY(-50%);z-index:40;width:42px;height:42px;
+  border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--green);
+  font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.08);transition:.2s}
+.nav-btn:hover{box-shadow:0 0 20px rgba(0,230,122,.4)}
+.nav-btn[disabled]{opacity:.25;cursor:default;box-shadow:none}
+#prev{left:14px}#next{right:14px}
+@media (max-width:640px),print{
+  body{overflow:auto}
+  .deck{display:block;height:auto;overflow:visible}
+  .slide{height:auto;min-height:0;display:block;padding:44px 20px}
+  .slide:not(:last-child){border-bottom:1px solid var(--line)}
+  .dots,.counter,.nav-btn{display:none}
 }
-/* Footer */
-footer{border-top:1px solid var(--line);padding:32px 0 48px;font-size:13px;color:var(--muted)}
-footer b{color:var(--green)}
-@media (max-width:600px){h1{font-size:26px}.badge{display:block;margin:8px 0 0;width:max-content}}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <img class="logo" src="data:image/png;base64,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" alt="Proxima">
-    <h1>Proxima Meet <span class="ver">0.5.38</span><span class="badge">Build de test — équipe</span></h1>
-    <p class="tagline">Enregistrez. Transcrivez. Résumez. 100&nbsp;% sur votre appareil.</p>
-    <div class="dl-row">
-      <a class="btn" href="https://proxima-meet-updates.s3.fr-par.scw.cloud/windows/proxima-meet_0.5.38_x64-setup.exe">
-        ⊞ Télécharger pour Windows <small>.exe · x64 · ~282 Mo</small>
-      </a>
-      <a class="btn" href="https://proxima-meet-updates.s3.fr-par.scw.cloud/darwin/proxima-meet_0.5.38_aarch64.dmg">
-         Télécharger pour macOS <small>.dmg · Apple Silicon · ~70 Mo</small>
-      </a>
-    </div>
-    <p class="sysreq">Windows 10/11 (64&nbsp;bits) · macOS 11+ (puces M1/M2/M3/M4 uniquement). Installeur MSI disponible sur le kDrive interne.</p>
-  </div>
-</header>
+<div class="deck" id="deck">
 
-<main class="wrap">
-
-  <section>
-    <h2>✨ Nouveautés</h2>
-    <p class="sub">Le fil rouge de cette version&nbsp;: <b>vos données survivent aux mises à jour</b>. Cette mise à jour cumule les apports 0.5.37 (jamais déployée) et 0.5.38 — le parc passe directement de 0.5.36 à 0.5.38.</p>
-    <div class="cards">
-      <div class="card"><h3>Mises à jour OTA staging / prod</h3><p>Canal de mise à jour pilotable (<code>PROXIMA_UPDATE_CHANNEL</code>), badge «&nbsp;staging&nbsp;» visible dans À&nbsp;propos. Les futures versions arriveront automatiquement.</p></div>
-      <div class="card"><h3>Transcription FR sans franglais</h3><p>Mode français strict sur la passe cloud + filtre anti-franglais&nbsp;: fini les mots anglais parasites dans les transcriptions.</p></div>
-      <div class="card"><h3>Changement de modèle en session</h3><p>Basculer Rapide ↔ Verbatim en cours d'utilisation, sans redémarrer l'application.</p></div>
-      <div class="card"><h3>Page «&nbsp;Importer un média&nbsp;» refaite</h3><p>Vrai assistant en étapes (Extraction → Transcription → Sauvegarde), badges de formats, options avancées repliables.</p></div>
-      <div class="card"><h3>Démarrage plus rapide</h3><p>Préchauffage du modèle de transcription au lancement&nbsp;; le modèle reste résident entre deux enregistrements.</p></div>
-      <div class="card"><h3>Mentions légales des modèles IA</h3><p>À&nbsp;propos liste désormais les modèles embarqués&nbsp;: Whisper (MIT), Parakeet TDT 0.6B v3 (CC-BY-4.0), Silero VAD (MIT).</p></div>
-      <div class="card"><h3>Styles de résumé recentrés</h3><p>Trois styles par défaut clairs&nbsp;: Bref, Détaillé, Pédagogique (+ vos modèles personnalisés).</p></div>
-      <div class="card"><h3>Confidentialité affirmée</h3><p>Bandeau «&nbsp;zéro télémétrie&nbsp;», politique de confidentialité en français, aucune donnée ne quitte votre poste.</p></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>🐛 Bugs corrigés</h2>
-    <p class="sub">Quatre correctifs de persistance (tickets #97, #98, #102, #117) + stabilité de la transcription live.</p>
-    <table>
-      <tr><th>Ticket</th><th>Correctif</th></tr>
-      <tr><td class="ticket">#97</td><td>L'onboarding n'écrase plus les configurations existantes lors d'une mise à jour.</td></tr>
-      <tr><td class="ticket">#98</td><td>L'installeur ne supprime plus le statut d'onboarding&nbsp;; l'URL Proxima Chat est préchargée.</td></tr>
-      <tr><td class="ticket">#102</td><td>7 préférences critiques (glossaire, modèle de résumé, langue…) sont désormais stockées dans un fichier dédié et survivent aux mises à jour.</td></tr>
-      <tr><td class="ticket">#117</td><td>Les modèles de résumé personnalisés restent visibles après une mise à jour (migration automatique des anciens modèles).</td></tr>
-      <tr><td class="ticket">VAD</td><td>Correction du crash silencieux de la transcription live dès la première prise de parole (détecteur de voix Silero).</td></tr>
-      <tr><td class="ticket">UI</td><td>Purge du branding «&nbsp;Meetily&nbsp;» résiduel dans l'interface&nbsp;; libellés de modèles lisibles dans le sélecteur.</td></tr>
-    </table>
-    <div class="notice">
-      <b>Perte de données unique et connue&nbsp;:</b> lors du saut 0.5.36 → 0.5.38, les 7 préférences ci-dessus sont perdues <b>une dernière fois</b> (le nouveau stockage n'existait pas encore en 0.5.36). Toutes les mises à jour suivantes sont protégées.
-    </div>
-  </section>
-
-  <section>
-    <h2>📊 Charge de travail</h2>
-    <p class="sub">Cycle 0.5.37 + 0.5.38 (le parc reçoit les deux d'un coup).</p>
-    <div class="kpis">
-      <div class="kpi"><div class="num">2 versions</div><div class="lbl">0.5.36 → 0.5.38 (saut direct)</div></div>
-      <div class="kpi"><div class="num">4 tickets</div><div class="lbl">persistance #97 · #98 · #102 · #117</div></div>
-      <div class="kpi"><div class="num">11 retours</div><div class="lbl">batch #115 traité (0.5.37)</div></div>
-      <div class="kpi"><div class="num">148 / 148</div><div class="lbl">tests Rust — 0 échec</div></div>
-      <div class="kpi"><div class="num">20 / 20</div><div class="lbl">tests frontend (vitest)</div></div>
-      <div class="kpi"><div class="num">0 erreur</div><div class="lbl">TypeScript (tsc --noEmit)</div></div>
-    </div>
-  </section>
-
-  <section>
-    <h2>✅ Recette — éléments à tester</h2>
-    <p class="sub">Merci de dérouler ces vérifications et de remonter tout écart à Cédric (cedric@proxima.green).</p>
-
-    <div class="check-block">
-      <h3>Test A — Persistance (le cœur de la version)</h3>
-      <p class="ctx">Prérequis&nbsp;: poste avec une version antérieure installée et configurée (modèle personnalisé, glossaire, URL Proxima Chat). Installer 0.5.38 <b>par-dessus</b>, puis vérifier&nbsp;:</p>
-      <label class="chk"><input type="checkbox"> L'onboarding ne se relance <b>pas</b> après la mise à jour</label>
-      <label class="chk"><input type="checkbox"> Les modèles de résumé personnalisés sont toujours visibles dans le sélecteur de styles</label>
-      <label class="chk"><input type="checkbox"> Le choix du modèle d'IA (LLM) est conservé</label>
-      <label class="chk"><input type="checkbox"> L'URL Proxima Chat est conservée</label>
-      <label class="chk"><input type="checkbox"> Le glossaire personnalisé est conservé</label>
-      <label class="chk"><input type="checkbox"> À&nbsp;propos affiche <b>0.5.38</b>, sans badge «&nbsp;staging&nbsp;»</label>
-    </div>
-
-    <div class="check-block">
-      <h3>Test B — Fonctionnel courant</h3>
-      <label class="chk"><input type="checkbox"> Enregistrer une réunion test&nbsp;: la transcription live démarre dès la première prise de parole (pas de blocage)</label>
-      <label class="chk"><input type="checkbox"> Transcription en français&nbsp;: pas de mots anglais parasites («&nbsp;franglais&nbsp;»)</label>
-      <label class="chk"><input type="checkbox"> Changer de modèle (Rapide ↔ Verbatim) en cours de session, sans redémarrage</label>
-      <label class="chk"><input type="checkbox"> Importer un fichier média via la nouvelle page «&nbsp;Importer&nbsp;» (étapes Extraction → Transcription → Sauvegarde)</label>
-      <label class="chk"><input type="checkbox"> Générer un résumé avec chaque style&nbsp;: Bref, Détaillé, Pédagogique</label>
-      <label class="chk"><input type="checkbox"> Audio&nbsp;: relecture sur haut-parleurs <b>et</b> sur casque Bluetooth</label>
-      <label class="chk"><input type="checkbox"> Icône de la barre système (tray) présente et fonctionnelle</label>
-      <label class="chk"><input type="checkbox"> Ouverture de l'URL externe Proxima Chat depuis l'app</label>
-      <label class="chk"><input type="checkbox"> Démarrage&nbsp;: l'app est prête à transcrire rapidement après le lancement</label>
-    </div>
-
-    <div class="check-block">
-      <h3>Test C — Spécifique macOS 🍎</h3>
-      <p class="ctx">Build Apple Silicon (M1/M2/M3/M4). <b>Ce build de test n'est pas notarisé par Apple</b>&nbsp;: macOS affichera un avertissement au premier lancement — c'est attendu.</p>
-      <div class="gatekeeper">
-        <b>Pour ouvrir l'app la première fois&nbsp;:</b> glisser «&nbsp;Proxima Meet&nbsp;» dans Applications, puis <b>clic droit → Ouvrir → Ouvrir</b>.<br>
-        Si macOS bloque encore&nbsp;: Terminal → <code>xattr -cr "/Applications/Proxima Meet.app"</code> puis relancer.
+  <section class="slide hero">
+    <div class="wrap">
+      <a class="back" href="../index.html">← Retour au hub</a>
+      <div><span class="badge">Build de test — équipe · 13 juillet 2026</span></div>
+      <h1>Proxima Meet <span class="ver">0.5.38</span></h1>
+      <p class="tagline">Enregistrez. Transcrivez. Résumez. 100&nbsp;% sur votre appareil.
+      Le fil rouge de cette version&nbsp;: <b>vos données survivent aux mises à jour</b>.</p>
+      <div class="dl-row">
+        <a class="btn" href="https://proxima-meet-updates.s3.fr-par.scw.cloud/windows/proxima-meet_0.5.38_x64-setup.exe">
+          ⊞ Télécharger pour Windows <small>.exe · x64 · ~282 Mo</small>
+        </a>
+        <a class="btn" href="https://proxima-meet-updates.s3.fr-par.scw.cloud/darwin/proxima-meet_0.5.38_aarch64.dmg">
+           Télécharger pour macOS <small>.dmg · Apple Silicon · ~70 Mo</small>
+        </a>
       </div>
-      <label class="chk"><input type="checkbox"> Le DMG se monte et l'app se lance (après contournement ci-dessus)</label>
-      <label class="chk"><input type="checkbox"> Autorisations micro + capture d'écran audio demandées et fonctionnelles</label>
-      <label class="chk"><input type="checkbox"> Dérouler les tests A et B ci-dessus sur Mac également</label>
+      <p class="sysreq">Windows 10/11 (64&nbsp;bits) · macOS 11+ (puces M1/M2/M3/M4 uniquement). Installeur MSI disponible sur le kDrive interne.</p>
+      <p class="foot">→ Naviguez avec les flèches, un swipe, ou les points en bas de l'écran.</p>
     </div>
   </section>
 
-</main>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">1 · Nouveautés</p>
+      <h2>Ce que cette version apporte</h2>
+      <p class="sub">Cette mise à jour cumule les apports 0.5.37 (jamais déployée) et 0.5.38 — le parc passe directement de 0.5.36 à 0.5.38.</p>
+      <div class="cards">
+        <div class="card"><h3>Mises à jour OTA staging / prod</h3><p>Canal de mise à jour pilotable (<code>PROXIMA_UPDATE_CHANNEL</code>), badge «&nbsp;staging&nbsp;» dans À&nbsp;propos. Les futures versions arriveront automatiquement.</p></div>
+        <div class="card"><h3>Transcription FR sans franglais</h3><p>Mode français strict sur la passe cloud + filtre anti-franglais&nbsp;: fini les mots anglais parasites.</p></div>
+        <div class="card"><h3>Changement de modèle en session</h3><p>Basculer Rapide ↔ Verbatim en cours d'utilisation, sans redémarrer l'application.</p></div>
+        <div class="card"><h3>Page «&nbsp;Importer un média&nbsp;» refaite</h3><p>Assistant en étapes (Extraction → Transcription → Sauvegarde), badges de formats, options avancées repliables.</p></div>
+        <div class="card"><h3>Démarrage plus rapide</h3><p>Préchauffage du modèle de transcription au lancement&nbsp;; le modèle reste résident entre deux enregistrements.</p></div>
+        <div class="card"><h3>Confidentialité affirmée</h3><p>Bandeau «&nbsp;zéro télémétrie&nbsp;», politique de confidentialité en français, mentions légales des modèles IA (Whisper, Parakeet, Silero), styles de résumé recentrés (Bref, Détaillé, Pédagogique).</p></div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <b>Proxima Meet 0.5.38</b> · build du 13 juillet 2026 · 100&nbsp;% local, zéro télémétrie<br>
-    Diffusion interne équipe — merci de ne pas partager ce lien hors de l'équipe. Retours&nbsp;: cedric@proxima.green
-  </div>
-</footer>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">2 · Bugs corrigés</p>
+      <h2>Quatre correctifs de persistance + stabilité du live</h2>
+      <table>
+        <tr><th>Ticket</th><th>Correctif</th></tr>
+        <tr><td class="ticket">#97</td><td>L'onboarding n'écrase plus les configurations existantes lors d'une mise à jour.</td></tr>
+        <tr><td class="ticket">#98</td><td>L'installeur ne supprime plus le statut d'onboarding&nbsp;; l'URL Proxima Chat est préchargée.</td></tr>
+        <tr><td class="ticket">#102</td><td>7 préférences critiques (glossaire, modèle de résumé, langue…) stockées dans un fichier dédié — elles survivent aux mises à jour.</td></tr>
+        <tr><td class="ticket">#117</td><td>Les modèles de résumé personnalisés restent visibles après une mise à jour (migration automatique).</td></tr>
+        <tr><td class="ticket">VAD</td><td>Correction du crash silencieux de la transcription live dès la première prise de parole (détecteur de voix Silero).</td></tr>
+        <tr><td class="ticket">UI</td><td>Purge du branding «&nbsp;Meetily&nbsp;» résiduel&nbsp;; libellés de modèles lisibles dans le sélecteur.</td></tr>
+      </table>
+      <div class="notice">
+        <b>Perte de données unique et connue&nbsp;:</b> lors du saut 0.5.36 → 0.5.38, les 7 préférences ci-dessus sont perdues <b>une dernière fois</b> (le nouveau stockage n'existait pas encore en 0.5.36). Toutes les mises à jour suivantes sont protégées.
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">3 · Charge de travail</p>
+      <h2>Le cycle 0.5.37 + 0.5.38 en chiffres</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="num">2 versions</div><div class="lbl">0.5.36 → 0.5.38 (saut direct)</div></div>
+        <div class="kpi"><div class="num">4 tickets</div><div class="lbl">persistance #97 · #98 · #102 · #117</div></div>
+        <div class="kpi"><div class="num">11 retours</div><div class="lbl">batch #115 traité (0.5.37)</div></div>
+        <div class="kpi"><div class="num">148 / 148</div><div class="lbl">tests Rust — 0 échec</div></div>
+        <div class="kpi"><div class="num">20 / 20</div><div class="lbl">tests frontend (vitest)</div></div>
+        <div class="kpi"><div class="num">0 erreur</div><div class="lbl">TypeScript (tsc --noEmit)</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">4 · Recette — test A</p>
+      <h2>La persistance, le cœur de la version</h2>
+      <div class="check-block">
+        <h3>Test A — Mise à jour par-dessus une version configurée</h3>
+        <p class="ctx">Prérequis&nbsp;: poste avec une version antérieure installée et configurée (modèle personnalisé, glossaire, URL Proxima Chat). Installer 0.5.38 <b>par-dessus</b>, puis vérifier&nbsp;:</p>
+        <label class="chk"><input type="checkbox"> L'onboarding ne se relance <b>pas</b> après la mise à jour</label>
+        <label class="chk"><input type="checkbox"> Les modèles de résumé personnalisés sont toujours visibles dans le sélecteur de styles</label>
+        <label class="chk"><input type="checkbox"> Le choix du modèle d'IA (LLM) est conservé</label>
+        <label class="chk"><input type="checkbox"> L'URL Proxima Chat est conservée</label>
+        <label class="chk"><input type="checkbox"> Le glossaire personnalisé est conservé</label>
+        <label class="chk"><input type="checkbox"> À&nbsp;propos affiche <b>0.5.38</b>, sans badge «&nbsp;staging&nbsp;»</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">5 · Recette — test B</p>
+      <h2>Le fonctionnel courant</h2>
+      <div class="check-block">
+        <h3>Test B — Utilisation quotidienne</h3>
+        <label class="chk"><input type="checkbox"> Enregistrer une réunion test&nbsp;: la transcription live démarre dès la première prise de parole</label>
+        <label class="chk"><input type="checkbox"> Transcription en français&nbsp;: pas de mots anglais parasites («&nbsp;franglais&nbsp;»)</label>
+        <label class="chk"><input type="checkbox"> Changer de modèle (Rapide ↔ Verbatim) en cours de session, sans redémarrage</label>
+        <label class="chk"><input type="checkbox"> Importer un fichier média via la nouvelle page «&nbsp;Importer&nbsp;»</label>
+        <label class="chk"><input type="checkbox"> Générer un résumé avec chaque style&nbsp;: Bref, Détaillé, Pédagogique</label>
+        <label class="chk"><input type="checkbox"> Audio&nbsp;: relecture sur haut-parleurs <b>et</b> sur casque Bluetooth</label>
+        <label class="chk"><input type="checkbox"> Icône de la barre système (tray) présente et fonctionnelle</label>
+        <label class="chk"><input type="checkbox"> Ouverture de l'URL externe Proxima Chat depuis l'app</label>
+        <label class="chk"><input type="checkbox"> Démarrage&nbsp;: l'app est prête à transcrire rapidement après le lancement</label>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">6 · Recette — test C</p>
+      <h2>Spécifique macOS 🍎</h2>
+      <div class="check-block">
+        <h3>Test C — Apple Silicon (M1/M2/M3/M4)</h3>
+        <p class="ctx"><b>Ce build de test n'est pas notarisé par Apple</b>&nbsp;: macOS affichera un avertissement au premier lancement — c'est attendu.</p>
+        <div class="gatekeeper">
+          <b>Pour ouvrir l'app la première fois&nbsp;:</b> glisser «&nbsp;Proxima Meet&nbsp;» dans Applications, puis <b>clic droit → Ouvrir → Ouvrir</b>.<br>
+          Si macOS bloque encore&nbsp;: Terminal → <code>xattr -cr "/Applications/Proxima Meet.app"</code> puis relancer.
+        </div>
+        <label class="chk"><input type="checkbox"> Le DMG se monte et l'app se lance (après contournement ci-dessus)</label>
+        <label class="chk"><input type="checkbox"> Autorisations micro + capture d'écran audio demandées et fonctionnelles</label>
+        <label class="chk"><input type="checkbox"> Dérouler les tests A et B ci-dessus sur Mac également</label>
+      </div>
+      <p class="foot"><b>Proxima Meet 0.5.38</b> · build du 13 juillet 2026 · 100&nbsp;% local, zéro télémétrie · Diffusion interne équipe · Retours&nbsp;: cedric@proxima.green</p>
+    </div>
+  </section>
+
+</div>
+
+<button class="nav-btn" id="prev" aria-label="Slide précédente">←</button>
+<button class="nav-btn" id="next" aria-label="Slide suivante">→</button>
+<nav class="dots" id="dots" aria-label="Progression"></nav>
+<div class="counter" id="counter"></div>
+
+<script>
+const deck=document.getElementById('deck'),dots=document.getElementById('dots'),
+      counter=document.getElementById('counter'),
+      prev=document.getElementById('prev'),next=document.getElementById('next'),
+      slides=[...deck.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const b=document.createElement('button');
+  b.setAttribute('aria-label','Slide '+(i+1));
+  b.onclick=()=>go(i);dots.appendChild(b)});
+function idx(){return Math.round(deck.scrollLeft/deck.clientWidth)}
+function go(i){deck.scrollTo({left:Math.max(0,Math.min(slides.length-1,i))*deck.clientWidth,behavior:'smooth'})}
+function sync(){const i=idx();
+  dots.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  counter.textContent=(i+1)+' / '+slides.length;
+  prev.disabled=i===0;next.disabled=i===slides.length-1}
+deck.addEventListener('scroll',()=>requestAnimationFrame(sync));sync();
+prev.onclick=()=>go(idx()-1);next.onclick=()=>go(idx()+1);
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(idx()+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')go(idx()-1);
+});
+addEventListener('resize',()=>go(idx()));
+</script>
 
 </body>
 </html>

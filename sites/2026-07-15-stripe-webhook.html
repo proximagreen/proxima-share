@@ -25,143 +25,199 @@
   --red:#C1453B; --radius:14px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
   font-family:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6;
+  background:var(--bg); color:var(--ink); font-size:16px; line-height:1.6; overflow:hidden;
 }
-.wrap{max-width:960px;margin:0 auto;padding:0 24px}
-header{
-  position:relative; padding:56px 0 40px; overflow:hidden;
-  background:
-    radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
-    radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
-    var(--bg);
-  border-bottom:1px solid var(--line);
-}
-h1{font-size:30px;font-weight:700;letter-spacing:-.02em}
-h1 .ver{
-  background:linear-gradient(90deg,var(--green-light),var(--glow));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
-.badge{
-  display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
-  padding:4px 12px;border-radius:999px;margin-left:12px;vertical-align:middle;
-  background:rgba(0,168,88,.12);color:var(--green);border:1px solid rgba(0,168,88,.35);
-}
-.tagline{font-size:17px;color:var(--muted);margin:12px 0 0}
-.back{font-size:13px;margin-bottom:20px;display:inline-block;color:var(--green-light);text-decoration:none}
-main{padding:44px 0 24px}
-section{margin-bottom:52px}
-h2{font-size:23px;font-weight:600;letter-spacing:-.02em;margin-bottom:6px}
+/* ── Deck ── */
+.deck{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;height:100dvh;
+  scroll-behavior:smooth;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;height:100dvh;
+  overflow-y:auto;padding:56px 24px 96px;display:flex;flex-direction:column;justify-content:center}
+.slide>.wrap{max-width:860px;margin:0 auto;width:100%}
+.slide.hero{background:
+  radial-gradient(600px circle at 15% 10%, rgba(0,230,122,.12), transparent 60%),
+  radial-gradient(500px circle at 90% 0%, rgba(0,168,88,.10), transparent 55%),
+  var(--bg)}
+.kicker{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green-light);margin-bottom:10px}
+h1{font-size:34px;font-weight:700;letter-spacing:-.02em}
+h1 .ver{background:linear-gradient(90deg,var(--green-light),var(--glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:27px;font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.badge{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 12px;border-radius:999px;background:rgba(0,168,88,.12);color:var(--green);
+  border:1px solid rgba(0,168,88,.35);margin-bottom:16px}
+.tagline{font-size:18px;color:var(--muted);margin:14px 0 0}
 .sub{color:var(--muted);margin-bottom:22px;font-size:15px}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{
-  background:var(--card);backdrop-filter:blur(16px);
-  border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
-  box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px;
-}
+.back{font-size:13px;color:var(--green-light);text-decoration:none;display:inline-block;margin-bottom:18px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.4);
+  border-radius:var(--radius);box-shadow:0 4px 30px rgba(0,0,0,.06);padding:20px}
 .card h3{font-size:16px;font-weight:600;margin-bottom:6px;color:var(--green)}
 .card p{font-size:14px;color:var(--muted)}
-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);
+  overflow:hidden;box-shadow:0 4px 30px rgba(0,0,0,.06)}
 th,td{padding:12px 16px;text-align:left;font-size:14px;border-bottom:1px solid var(--line)}
 th{background:rgba(0,60,28,.06);font-weight:600;color:var(--green)}
 tr:last-child td{border-bottom:none}
-.ticket{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-weight:600;color:var(--green-light);white-space:nowrap}
-.notice{
-  margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
-  background:rgba(193,69,59,.08);border:1px solid rgba(193,69,59,.3);color:#7a2b24;
-}
+.ticket{font-family:ui-monospace,Menlo,Consolas,monospace;font-weight:600;color:var(--green-light);white-space:nowrap}
+.notice{margin-top:16px;padding:16px 20px;border-radius:var(--radius);font-size:14px;
+  background:rgba(193,69,59,.08);border:1px solid rgba(193,69,59,.3);color:#7a2b24}
 .notice b{color:var(--red)}
-.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
-.kpi{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:20px;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,.06)}
-.kpi .num{
-  font-size:26px;font-weight:700;letter-spacing:-.02em;
+.notice.ok{background:rgba(0,168,88,.08);border-color:rgba(0,168,88,.3);color:#1c4a2e}
+.notice.ok b{color:var(--green-light)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px}
+.kpi{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
+  padding:22px;text-align:center;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.kpi .num{font-size:30px;font-weight:700;letter-spacing:-.02em;
   background:linear-gradient(90deg,var(--green-light),var(--glow));
-  -webkit-background-clip:text;background-clip:text;color:transparent;
-}
+  -webkit-background-clip:text;background-clip:text;color:transparent}
 .kpi .lbl{font-size:13px;color:var(--muted);margin-top:4px}
-.check-block{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
+.check-block{background:var(--card);border:1px solid rgba(255,255,255,.4);border-radius:var(--radius);
+  padding:24px;box-shadow:0 4px 30px rgba(0,0,0,.06)}
 .check-block h3{font-size:17px;color:var(--green);margin-bottom:4px}
 .check-block .ctx{font-size:13px;color:var(--muted);margin-bottom:14px}
 label.chk{display:flex;gap:10px;align-items:flex-start;font-size:14px;padding:6px 0;cursor:pointer}
 label.chk input{accent-color:var(--green-light);margin-top:3px;flex-shrink:0}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;background:rgba(0,60,28,.07);padding:2px 6px;border-radius:6px}
-footer{border-top:1px solid var(--line);padding:32px 0 48px;font-size:13px;color:var(--muted)}
-footer b{color:var(--green)}
-@media (max-width:600px){h1{font-size:24px}.badge{display:block;margin:8px 0 0;width:max-content}}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;background:rgba(0,60,28,.07);padding:2px 6px;border-radius:6px}
+.foot{font-size:12px;color:var(--muted);margin-top:26px}
+/* ── Contrôles deck ── */
+.dots{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;gap:8px;z-index:40}
+.dots button{width:10px;height:10px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(0,60,28,.22);transition:.2s;padding:0}
+.dots button.on{background:var(--glow);box-shadow:0 0 8px rgba(0,230,122,.6)}
+.counter{position:fixed;bottom:16px;right:20px;font:600 12px system-ui;color:var(--muted);z-index:40}
+.nav-btn{position:fixed;top:50%;transform:translateY(-50%);z-index:40;width:42px;height:42px;
+  border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--green);
+  font-size:18px;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,.08);transition:.2s}
+.nav-btn:hover{box-shadow:0 0 20px rgba(0,230,122,.4)}
+.nav-btn[disabled]{opacity:.25;cursor:default;box-shadow:none}
+#prev{left:14px}#next{right:14px}
+.hint{position:fixed;bottom:18px;left:20px;font:12px system-ui;color:var(--muted);z-index:40}
+/* ── Mobile étroit & impression : page verticale classique ── */
+@media (max-width:640px),print{
+  body{overflow:auto}
+  .deck{display:block;height:auto;overflow:visible}
+  .slide{height:auto;min-height:0;display:block;padding:44px 20px}
+  .slide:not(:last-child){border-bottom:1px solid var(--line)}
+  .dots,.counter,.nav-btn,.hint{display:none}
+}
 </style>
 </head>
 <body>
 
-<header>
-  <div class="wrap">
-    <a class="back" href="../index.html">← Retour au hub</a>
-    <h1>Proxima Sites <span class="ver">Fix webhook Stripe</span><span class="badge">Récap équipe · 15 juillet 2026</span></h1>
-    <p class="tagline">Les notifications de paiement Stripe échouaient depuis le 9 juillet sur <code>go.proxima.green</code>. Cause identifiée, corrigée, déployée et vérifiée dans la journée.</p>
-  </div>
-</header>
+<div class="deck" id="deck">
 
-<main class="wrap">
-
-  <section>
-    <h2>🚨 Le problème</h2>
-    <p class="sub">Stripe nous a alertés par email : impossible de livrer les événements webhook (confirmations de paiement, factures d'abonnement) à notre serveur.</p>
-    <div class="cards">
-      <div class="card"><h3>12 tentatives échouées</h3><p>Depuis le 9 juillet à 15h03 UTC, toutes les notifications envoyées par Stripe vers <code>go.proxima.green/api/stripe-webhook</code> étaient rejetées.</p></div>
-      <div class="card"><h3>Échéance au 18 juillet</h3><p>Stripe menaçait de désactiver définitivement l'endpoint le 18 juillet — les paiements Checkout n'auraient plus créé les comptes clients automatiquement.</p></div>
-      <div class="card"><h3>Impact potentiel</h3><p>Un achat via la landing n'aurait plus déclenché la création du client dans notre base (PocketBase) ni le suivi d'abonnement.</p></div>
+  <section class="slide hero">
+    <div class="wrap">
+      <a class="back" href="../index.html">← Retour au hub</a>
+      <div><span class="badge">Récap équipe · Proxima Sites · 15 juillet 2026</span></div>
+      <h1>Fix webhook <span class="ver">Stripe</span></h1>
+      <p class="tagline">Les notifications de paiement Stripe échouaient depuis le 9 juillet sur <code>go.proxima.green</code>.
+      En 5 slides : le problème, la cause, la solution, les chiffres, et ce qu'il reste à faire.</p>
+      <p class="foot">→ Naviguez avec les flèches, un swipe, ou les points en bas de l'écran.</p>
     </div>
   </section>
 
-  <section>
-    <h2>🔎 Diagnostic</h2>
-    <p class="sub">Le serveur était bien en ligne (DNS, certificat et temps de réponse OK) — le problème était dans notre code.</p>
-    <table>
-      <tr><th>Sujet</th><th>Constat</th></tr>
-      <tr><td class="ticket">Cause n°1</td><td>Le serveur transformait le message de Stripe (parsing JSON global) <b>avant</b> de vérifier sa signature de sécurité. La vérification, qui exige le message brut intact, échouait donc à 100&nbsp;% — chaque webhook était rejeté.</td></tr>
-      <tr><td class="ticket">Cause n°2</td><td>Le serveur attendait la fin d'écritures en base de données avant de répondre à Stripe, avec un risque de dépassement du délai imparti (timeout) les jours de lenteur.</td></tr>
-    </table>
-    <div class="notice"><b>Bonne nouvelle :</b> aucun paiement n'a été perdu — Stripe encaisse normalement même quand le webhook échoue. Seule la création automatique des fiches clients était en panne.</div>
-  </section>
-
-  <section>
-    <h2>🔧 Ce qui a été fait</h2>
-    <div class="cards">
-      <div class="card"><h3>Message brut préservé</h3><p>La route du webhook est désormais exclue du parsing JSON global : Stripe est vérifié sur le message original, la signature passe.</p></div>
-      <div class="card"><h3>Réponse immédiate</h3><p>Le serveur confirme la réception à Stripe tout de suite, puis fait le travail en base en arrière-plan. Plus aucun risque de timeout.</p></div>
-      <div class="card"><h3>Déployé et vérifié</h3><p>Correctif poussé sur GitHub, redéployé automatiquement (Coolify) et testé en production : l'endpoint répond correctement et la vérification de signature est active.</p></div>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">1 · Le problème</p>
+      <h2>Stripe n'arrivait plus à nous prévenir des paiements</h2>
+      <p class="sub">Un « webhook », c'est le coup de fil que Stripe passe à notre serveur après chaque événement (paiement validé, facture émise…). Depuis le 9 juillet, notre serveur raccrochait systématiquement.</p>
+      <div class="cards">
+        <div class="card"><h3>12 tentatives échouées</h3><p>Toutes les notifications envoyées vers <code>go.proxima.green/api/stripe-webhook</code> étaient rejetées depuis le 9 juillet 15h03.</p></div>
+        <div class="card"><h3>Ultimatum au 18 juillet</h3><p>Stripe désactive définitivement un endpoint qui échoue 9 jours de suite — il restait 3 jours.</p></div>
+        <div class="card"><h3>Risque concret</h3><p>Un achat sur la landing n'aurait plus créé automatiquement la fiche client ni suivi l'abonnement.</p></div>
+      </div>
     </div>
   </section>
 
-  <section>
-    <h2>📊 En chiffres</h2>
-    <div class="kpis">
-      <div class="kpi"><div class="num">6 jours</div><div class="lbl">de webhooks en échec (9 → 15 juillet)</div></div>
-      <div class="kpi"><div class="num">1 commit</div><div class="lbl">correctif ciblé sur le serveur API</div></div>
-      <div class="kpi"><div class="num">2 min 30</div><div class="lbl">entre le push et la mise en prod</div></div>
-      <div class="kpi"><div class="num">3 jours</div><div class="lbl">de marge gagnée avant la désactivation Stripe</div></div>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">2 · Le diagnostic</p>
+      <h2>Le serveur était en ligne… mais il abîmait le message avant de le vérifier</h2>
+      <p class="sub">Chaque webhook Stripe est signé, comme un courrier cacheté. Pour vérifier le cachet, il faut l'enveloppe <b>intacte</b>. Or notre serveur ouvrait l'enveloppe (parsing JSON) avant de vérifier le cachet — la vérification échouait donc à tous les coups.</p>
+      <table>
+        <tr><th>Piste</th><th>Constat</th></tr>
+        <tr><td class="ticket">Réseau ?</td><td>Non — DNS, certificat TLS et temps de réponse parfaits.</td></tr>
+        <tr><td class="ticket">Cause n°1</td><td>Le message brut était transformé avant la vérification de signature → rejet systématique (erreur 400).</td></tr>
+        <tr><td class="ticket">Cause n°2</td><td>Le serveur attendait des écritures en base avant de répondre → risque de dépassement du délai imparti par Stripe.</td></tr>
+      </table>
+      <div class="notice ok"><b>Bonne nouvelle :</b> aucun paiement perdu — Stripe encaisse même quand le webhook échoue. Seule la création automatique des fiches clients était en panne.</div>
     </div>
   </section>
 
-  <section>
-    <h2>✅ Reste à faire</h2>
-    <div class="check-block">
-      <h3>Côté Dashboard Stripe (Cédric)</h3>
-      <p class="ctx">Développeurs → Webhooks → endpoint <code>go.proxima.green/api/stripe-webhook</code>.</p>
-      <label class="chk"><input type="checkbox"> Vérifier qu'une nouvelle livraison passe en 200 (Stripe réessaie seul, ou « Renvoyer »)</label>
-      <label class="chk"><input type="checkbox"> Renvoyer les événements échoués depuis le 9 juillet, surtout les <code>checkout.session.completed</code></label>
-      <label class="chk"><input type="checkbox"> Contrôler que les éventuels achats de la période ont bien leur fiche client en base</label>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">3 · La solution</p>
+      <h2>Deux corrections ciblées, déployées dans la journée</h2>
+      <div class="cards">
+        <div class="card"><h3>Message brut préservé</h3><p>La route du webhook est exclue du traitement JSON global : Stripe est désormais vérifié sur l'enveloppe intacte, le cachet passe.</p></div>
+        <div class="card"><h3>Réponse immédiate</h3><p>Le serveur dit « bien reçu » à Stripe tout de suite, puis fait le travail en base en arrière-plan. Plus aucun risque de timeout.</p></div>
+        <div class="card"><h3>Vérifié en production</h3><p>Correctif poussé, redéployé automatiquement, puis testé : l'endpoint répond correctement et la vérification de signature est active.</p></div>
+      </div>
     </div>
   </section>
 
-</main>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">4 · En chiffres</p>
+      <h2>De l'alerte à la prod</h2>
+      <div class="kpis">
+        <div class="kpi"><div class="num">6 jours</div><div class="lbl">de webhooks en échec (9 → 15 juillet)</div></div>
+        <div class="kpi"><div class="num">1 commit</div><div class="lbl">correctif ciblé sur le serveur API</div></div>
+        <div class="kpi"><div class="num">2 min 30</div><div class="lbl">entre le push et la mise en prod</div></div>
+        <div class="kpi"><div class="num">3 jours</div><div class="lbl">de marge avant la désactivation Stripe</div></div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  <div class="wrap">
-    <b>Proxima Sites — fix webhook Stripe</b> · récap du 15 juillet 2026<br>
-    Diffusion interne équipe — merci de ne pas partager ce lien hors de l'équipe. Retours : cedric@proxima.green
-  </div>
-</footer>
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker">5 · Reste à faire</p>
+      <h2>Une dernière vérification côté Dashboard Stripe</h2>
+      <div class="check-block">
+        <h3>À faire par Cédric</h3>
+        <p class="ctx">Dashboard Stripe → Développeurs → Webhooks → endpoint <code>go.proxima.green/api/stripe-webhook</code>.</p>
+        <label class="chk"><input type="checkbox"> Vérifier qu'une nouvelle livraison passe en 200 (Stripe réessaie seul, ou « Renvoyer »)</label>
+        <label class="chk"><input type="checkbox"> Renvoyer les événements échoués depuis le 9 juillet, surtout les <code>checkout.session.completed</code></label>
+        <label class="chk"><input type="checkbox"> Contrôler que les éventuels achats de la période ont bien leur fiche client en base</label>
+      </div>
+      <p class="foot"><b>Proxima Sites — fix webhook Stripe</b> · récap du 15 juillet 2026 · Diffusion interne équipe · Retours : cedric@proxima.green</p>
+    </div>
+  </section>
+
+</div>
+
+<button class="nav-btn" id="prev" aria-label="Slide précédente">←</button>
+<button class="nav-btn" id="next" aria-label="Slide suivante">→</button>
+<nav class="dots" id="dots" aria-label="Progression"></nav>
+<div class="counter" id="counter"></div>
+
+<script>
+const deck=document.getElementById('deck'),dots=document.getElementById('dots'),
+      counter=document.getElementById('counter'),
+      prev=document.getElementById('prev'),next=document.getElementById('next'),
+      slides=[...deck.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const b=document.createElement('button');
+  b.setAttribute('aria-label','Slide '+(i+1));
+  b.onclick=()=>go(i);dots.appendChild(b)});
+function idx(){return Math.round(deck.scrollLeft/deck.clientWidth)}
+function go(i){deck.scrollTo({left:Math.max(0,Math.min(slides.length-1,i))*deck.clientWidth,behavior:'smooth'})}
+function sync(){const i=idx();
+  dots.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  counter.textContent=(i+1)+' / '+slides.length;
+  prev.disabled=i===0;next.disabled=i===slides.length-1}
+deck.addEventListener('scroll',()=>requestAnimationFrame(sync));sync();
+prev.onclick=()=>go(idx()-1);next.onclick=()=>go(idx()+1);
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' ')go(idx()+1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')go(idx()-1);
+});
+addEventListener('resize',()=>go(idx()));
+</script>
 
 </body>
 </html>
