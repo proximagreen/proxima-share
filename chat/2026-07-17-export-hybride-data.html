@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proxima Chat — Proxima Data, exports fiables et à la charte (17 juillet 2026)</title>
+<style>
+:root{
+  --proxima-green:#003C1C; --proxima-green-light:#00A858; --proxima-green-glow:#00E67A;
+  --proxima-red:#C1453B;
+  --green-tint-06:rgba(0,60,28,.06); --green-light-10:rgba(0,168,88,.10); --red-tint-10:rgba(193,69,59,.10);
+  --bg:#EEF1ED; --surface:#FFFFFF; --surface-muted:#F4F5F3;
+  --border:#E5E7E4; --border-strong:#D6DAD5;
+  --fg1:#0A0A0A; --fg2:rgba(0,0,0,.65); --fg3:#6B7280;
+  --radius-lg:14px; --radius-xl:16px; --radius-pill:999px;
+  --shadow-card:0 1px 2px rgba(0,0,0,.03),0 6px 22px rgba(0,0,0,.04);
+  --font-sans:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --tracking-brand:-0.02em;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--fg1);
+  font-size:18px;line-height:1.6;overflow:hidden}
+.deck{height:100dvh;overflow-y:auto;scroll-snap-type:y proximity;scroll-behavior:smooth}
+.slide{min-height:100dvh;scroll-snap-align:start;display:flex;align-items:center;padding:72px 24px}
+.slide>.wrap{max-width:1020px;margin:0 auto;width:100%}
+.slide.hero{background:
+  radial-gradient(700px circle at 15% 12%, rgba(0,230,122,.13), transparent 60%),
+  radial-gradient(560px circle at 88% 4%, rgba(0,168,88,.10), transparent 55%), var(--bg)}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--proxima-green-light);margin-bottom:12px}
+h1{font-size:clamp(44px,7vw,76px);font-weight:800;letter-spacing:var(--tracking-brand);
+  line-height:1.06;color:var(--proxima-green)}
+h1 .ver{background:linear-gradient(90deg,var(--proxima-green-light),var(--proxima-green-glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(30px,4.6vw,48px);font-weight:800;letter-spacing:var(--tracking-brand);
+  line-height:1.12;color:var(--proxima-green);margin-bottom:10px}
+.badge{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:7px 16px;border-radius:var(--radius-pill);background:var(--green-light-10);
+  color:var(--proxima-green);border:1px solid rgba(0,168,88,.35);margin-bottom:20px}
+.cap{font-size:17px;color:var(--fg2);max-width:640px;margin-top:14px}
+.meta{font-size:14px;color:var(--fg3);margin-top:16px}
+.back{font-size:15px;font-weight:600;color:var(--proxima-green-light);text-decoration:none;
+  display:inline-block;margin-bottom:22px}
+code{font-family:var(--font-mono);font-size:.85em;background:var(--green-tint-06);padding:2px 7px;border-radius:6px}
+.hint{font-size:14px;color:var(--fg3);margin-top:44px}
+.foot{font-size:13px;color:var(--fg3);margin-top:38px}
+.split{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center;margin-top:26px}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;
+  transition:box-shadow .3s,transform .3s}
+.cell:hover{box-shadow:0 0 24px rgba(0,230,122,.35);transform:translateY(-2px)}
+.cell.wide{grid-column:span 2}
+.cell b{font-size:17.5px;color:var(--proxima-green);letter-spacing:var(--tracking-brand);line-height:1.3}
+.cell .note{font-size:13px;color:var(--fg3)}
+.chip{width:44px;height:44px;border-radius:12px;background:var(--green-light-10);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ico{width:20px;height:20px;flex-shrink:0}
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-top:30px}
+.ba>div{border-radius:var(--radius-lg);padding:30px;border:1px solid var(--border)}
+.ba .avant{background:#FBEDEC}
+.ba .apres{background:#E8F6EE}
+.ba .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em}
+.ba .avant .tag{color:var(--proxima-red)}.ba .apres .tag{color:var(--proxima-green-light)}
+.ba b{display:block;font-size:22px;letter-spacing:var(--tracking-brand);margin-top:8px;line-height:1.3}
+.ba .avant b{color:var(--proxima-red)}.ba .apres b{color:var(--proxima-green)}
+.ba p{font-size:14px;color:var(--fg2);margin-top:8px}
+.ba .arr{align-self:center;font-size:38px;color:var(--proxima-green-light);font-weight:800;background:none;border:none;padding:0}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:30px}
+.kpis .kcell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:26px 20px;box-shadow:var(--shadow-card);text-align:center}
+.kpis .knum{font-size:clamp(36px,4.6vw,52px);font-weight:800;letter-spacing:var(--tracking-brand);
+  background:linear-gradient(90deg,var(--proxima-green-light),var(--proxima-green-glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.kpis .klabel{font-size:13.5px;color:var(--fg3);margin-top:8px;line-height:1.4}
+.tl{position:relative;padding-left:36px;margin-top:30px}
+.tl::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--border-strong)}
+.tl .it{position:relative;margin-bottom:26px}
+.tl .pt{position:absolute;left:-36px;top:4px;width:18px;height:18px;border-radius:50%;border:3px solid var(--bg)}
+.tl .pt.v{background:var(--proxima-green-light);color:#00A858;animation:pulse 1.5s infinite alternate}
+.tl .pt.g{background:var(--border-strong)}
+.tl .when{font:700 12px var(--font-sans);letter-spacing:.08em;text-transform:uppercase;display:block;color:var(--proxima-green-light)}
+.tl .it.g .when{color:var(--fg3)}
+.tl b{font-size:20px;letter-spacing:var(--tracking-brand);color:var(--proxima-green)}
+.tl p{font-size:14px;color:var(--fg3)}
+.ppt-preview{margin-top:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border-strong);
+  background:var(--proxima-green);padding:18px 20px}
+.ppt-preview .bar{height:3px;width:46px;background:var(--proxima-green-glow);border-radius:2px;margin-bottom:12px}
+.ppt-preview .t1{color:#fff;font-weight:700;font-size:15px;letter-spacing:-.01em}
+.ppt-preview .t2{color:rgba(255,255,255,.65);font-size:12px;margin-top:4px}
+@keyframes pulse{from{box-shadow:0 0 6px currentColor}to{box-shadow:0 0 24px currentColor}}
+.a{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.slide.is-active .a{opacity:1;transform:none}
+.a.d1{transition-delay:.12s}.a.d2{transition-delay:.24s}.a.d3{transition-delay:.36s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}
+  .a{opacity:1;transform:none}}
+.dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:11px;z-index:40}
+.dots button{width:11px;height:11px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,60,28,.20);transition:.2s;padding:0}
+.dots button.on{background:var(--proxima-green-glow);box-shadow:0 0 10px rgba(0,230,122,.65)}
+.navs{position:fixed;right:15px;bottom:78px;display:flex;flex-direction:column;gap:9px;z-index:40}
+.nav-btn{width:46px;height:46px;border-radius:50%;border:1px solid var(--border);background:var(--surface);
+  color:var(--proxima-green);font-size:19px;cursor:pointer;box-shadow:var(--shadow-card);transition:.2s}
+.nav-btn:hover{box-shadow:0 0 22px rgba(0,230,122,.4)}
+.nav-btn[disabled]{opacity:.25;cursor:default;box-shadow:none}
+.counter{position:fixed;left:22px;bottom:24px;font:600 13px var(--font-sans);color:var(--fg3);z-index:40}
+@media (max-width:700px){
+  .split{grid-template-columns:1fr;gap:26px}
+  .bento{grid-template-columns:1fr}.cell.wide{grid-column:auto}
+  .ba{grid-template-columns:1fr}.ba .arr{transform:rotate(90deg);justify-self:center}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px),print{
+  body{overflow:auto}
+  .deck{height:auto;overflow:visible;scroll-snap-type:none}
+  .slide{min-height:0;display:block;padding:48px 20px}
+  .slide:not(:last-child){border-bottom:1px solid var(--border)}
+  .slide:last-child{padding-bottom:120px}
+  .dots,.navs,.counter,.hint{display:none}
+  h1{font-size:38px}h2{font-size:28px}
+  .a{opacity:1;transform:none}
+}
+/* ═══ Gate v2 ═══ */
+#gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:
+  radial-gradient(700px circle at 15% 12%, rgba(0,230,122,.14), transparent 60%),
+  radial-gradient(560px circle at 88% 90%, rgba(0,168,88,.10), transparent 55%), var(--bg)}
+#gate .panel{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);
+  border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,.08);padding:38px 34px;text-align:center}
+#gate .mark{width:56px;height:56px;border-radius:16px;background:var(--proxima-green);margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(0,230,122,.35)}
+#gate h1{font-size:26px;line-height:1.2}
+#gate .gsub{font-size:14px;color:var(--fg3);margin:6px 0 26px}
+#gate input[type=password]{width:100%;padding:14px 16px;font:inherit;font-size:16px;
+  border:1px solid var(--border-strong);border-radius:10px;outline:none;text-align:center;
+  letter-spacing:.08em;transition:.2s}
+#gate input[type=password]:focus{border-color:var(--proxima-green-light);box-shadow:0 0 0 3px rgba(0,230,122,.18)}
+#gate button{width:100%;margin-top:14px;padding:14px;font:inherit;font-size:16px;font-weight:700;
+  color:#fff;background:var(--proxima-green);border:none;border-radius:10px;cursor:pointer;
+  transition:box-shadow .25s, transform .15s}
+#gate button:hover{box-shadow:0 0 26px rgba(0,230,122,.45);transform:translateY(-1px)}
+#gate label{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;
+  font-size:13.5px;color:var(--fg3);cursor:pointer}
+#gate input[type=checkbox]{width:16px;height:16px;accent-color:var(--proxima-green-light)}
+#gate .err{display:none;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--proxima-red)}
+#gate.wrong .err{display:block}
+#gate.wrong .panel{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+body.locked>*:not(#gate){display:none!important}
+/* ═══ Pill nav flottante ═══ */
+.pillnav{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:60;
+  display:flex;align-items:center;gap:4px;padding:6px;border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.5);box-shadow:var(--shadow-card);
+  opacity:.92;transition:opacity .25s, box-shadow .3s, border-color .3s;max-width:calc(100vw - 20px)}
+.pillnav:hover,.pillnav:focus-within{opacity:1;border-color:rgba(0,230,122,.75);
+  box-shadow:0 0 0 1px rgba(0,230,122,.55), 0 0 22px rgba(0,230,122,.45), inset 0 0 12px rgba(0,230,122,.08)}
+.pillnav a,.pillnav button{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;min-height:40px;
+  border-radius:var(--radius-pill);border:none;background:none;cursor:pointer;text-decoration:none;
+  font:600 14px var(--font-sans);color:var(--proxima-green);transition:background .2s;white-space:nowrap}
+.pillnav a:hover,.pillnav button:hover{background:var(--green-tint-06)}
+@media (min-width:700px){.pillnav{opacity:.55}}
+#toast{position:fixed;bottom:88px;left:50%;transform:translate(-50%,150px);z-index:80;
+  background:var(--proxima-green);color:#fff;font:600 14px var(--font-sans);
+  padding:12px 22px;border-radius:var(--radius-pill);box-shadow:0 0 24px rgba(0,230,122,.4);
+  transition:transform .35s cubic-bezier(.16,1,.3,1)}
+#toast.show{transform:translate(-50%,0)}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <form class="panel" id="gateForm">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E67A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 2 l4 4 -4 4"/><path d="M3 11 V9 a4 4 0 0 1 4-4 h14"/>
+        <path d="M7 22 l-4-4 4-4"/><path d="M21 13 v2 a4 4 0 0 1 -4 4 H3"/>
+      </svg>
+    </div>
+    <h1>Proxima</h1>
+    <p class="gsub">Partage équipe — accès réservé</p>
+    <input type="password" id="pw" placeholder="Mot de passe d'équipe" autocomplete="current-password">
+    <button type="submit">Entrer</button>
+    <label><input type="checkbox" id="remember"> Se souvenir de moi sur cet appareil</label>
+    <p class="err">Mot de passe incorrect.</p>
+  </form>
+</div>
+
+<nav class="pillnav" aria-label="Navigation">
+  <a href="../index.html">← Accueil</a>
+  <button type="button" data-share aria-label="Partager cette page">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v14"/></svg>
+    Partager
+  </button>
+</nav>
+
+<div class="deck" id="deck">
+
+  <section class="slide hero is-active">
+    <div class="wrap">
+      <a class="back" href="../index.html">← Retour au hub</a>
+      <div><span class="badge">Récap équipe</span></div>
+      <h1 class="a">Proxima Data — <span class="ver">exports fiables et à la charte</span></h1>
+      <p class="cap a d1">Proxima Data, la fonction d'analyse de tableurs du chat, génère désormais des fichiers au design Proxima, avec des liens de téléchargement fiables et permanents.</p>
+      <p class="meta a d2">Proxima Chat · 17 juillet 2026 · branche <code>dev-10</code></p>
+      <p class="hint a d3">↓ Faites défiler</p>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">1 · Le problème</p>
+      <h2 class="a">Le lien de téléchargement était fragile</h2>
+      <div class="ba">
+        <div class="avant a d1">
+          <span class="tag">Avant</span>
+          <b>Un lien qui expirait au bout d'1 heure</b>
+          <p>Le téléchargement d'un export passait par un service séparé, avec une adresse publique dédiée à configurer — un point fragile, source d'échecs en production. Les fichiers eux-mêmes restaient bruts, sans identité visuelle.</p>
+        </div>
+        <div class="arr a d2" aria-hidden="true">→</div>
+        <div class="apres a d2">
+          <span class="tag">Maintenant</span>
+          <b>Lien permanent, fichiers à la charte</b>
+          <p>Le fichier est rangé directement dans Proxima Chat et sort avec le design Proxima — plus de service à part, plus d'expiration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">2 · Ce qui change — la livraison</p>
+      <h2 class="a">Le fichier vit dans le chat, comme une pièce jointe</h2>
+      <div class="bento">
+        <div class="cell wide a d1">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></div>
+          <b>Lien permanent</b>
+          <span class="note">Même adresse que le chat : le lien reste valable dans le temps, il ne périme plus au bout d'une heure.</span>
+        </div>
+        <div class="cell a d1">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L4 14 h6 l-1 8 9-12 h-6 z"/></svg></div>
+          <b>Zéro réglage serveur en plus</b>
+          <span class="note">Aucune configuration additionnelle à maintenir.</span>
+        </div>
+        <div class="cell a d2">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 l7 4 v6 c0 4-3 7-7 8 c-4-1-7-4-7-8 V7 z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <b>Un filet de sécurité gardé</b>
+          <span class="note">L'ancien mécanisme reste disponible en secours.</span>
+        </div>
+        <div class="cell wide a d2">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+          <b>Compatibilité totale</b>
+          <span class="note">Rien ne change dans votre usage quotidien : joindre un fichier, demander un export, télécharger le résultat — juste en plus fiable.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">3 · Ce qui change — le design des exports</p>
+      <h2 class="a">5 formats, tous signés Proxima</h2>
+      <div class="bento">
+        <div class="cell wide a d1">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M4 10h16M10 4v16"/></svg></div>
+          <b>PowerPoint — une présentation prête à envoyer</b>
+          <span class="note">Slide de couverture vert Proxima, cartes indicateurs, tableaux zébrés paginés, graphiques avec leurs valeurs affichées directement.</span>
+          <div class="ppt-preview" aria-hidden="true">
+            <div class="bar"></div>
+            <div class="t1">Rapport — Export Proxima</div>
+            <div class="t2">Aperçu de la couverture générée</div>
+          </div>
+        </div>
+        <div class="cell a d1">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7h13M8 12h13M8 17h13M3 7h.01M3 12h.01M3 17h.01"/></svg></div>
+          <b>Excel — prêt à retravailler</b>
+          <span class="note">En-têtes verts, volets figés, filtres automatiques, colonnes ajustées, nombres réellement sommables — les numéros SIRET, EAN et autres codes restent, eux, protégés et intacts.</span>
+        </div>
+        <div class="cell a d2">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></div>
+          <b>PDF & Word assortis</b>
+          <span class="note">Même habillage graphique que les autres formats.</span>
+        </div>
+        <div class="cell wide a d2">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 3 7v6c0 5 3.5 8.5 9 9 5.5-.5 9-4 9-9V7z"/></svg></div>
+          <b>La sécurité est conservée</b>
+          <span class="note">Les données personnelles détectées restent masquées dans les fichiers exportés, et la protection contre l'injection de formules est maintenue.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">4 · En chiffres</p>
+      <h2 class="a">Une fiabilité mesurée</h2>
+      <div class="kpis a d1">
+        <div class="kcell">
+          <div class="knum" data-count="34">0</div>
+          <p class="klabel">tests automatiques verts</p>
+        </div>
+        <div class="kcell">
+          <div class="knum" data-count="5">0</div>
+          <p class="klabel">formats d'export</p>
+        </div>
+        <div class="kcell">
+          <div class="knum">Permanent</div>
+          <p class="klabel">lien de téléchargement (contre 1 h avant)</p>
+        </div>
+        <div class="kcell">
+          <div class="knum" data-count="0">0</div>
+          <p class="klabel">réglage serveur supplémentaire</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">5 · Prochaines étapes</p>
+      <h2 class="a">Direction la production, puis un dernier contrôle</h2>
+      <div class="tl a d1">
+        <div class="it"><span class="pt v"></span><span class="when">Étape 1</span><b>Déploiement en production</b><p>Mise en ligne du nouveau mécanisme sur l'environnement de production (2 images).</p></div>
+        <div class="it g"><span class="pt g"></span><span class="when">Étape 2 · Recette</span><b>Un test simple, en conditions réelles</b><p>Joindre un CSV dans le chat, demander « exporte-moi ça en PowerPoint », vérifier que le lien fonctionne — et fonctionne encore le lendemain — et que le fichier est bien à la charte.</p></div>
+        <div class="it g"><span class="pt g"></span><span class="when">Étape 3 · Retour équipe</span><b>Signaler tout écart</b><p>Un lien qui ne fonctionne pas, une mise en page inattendue ? Écrire à cedric@proxima.green.</p></div>
+      </div>
+      <p class="foot">Proxima Chat · récap du 17 juillet 2026 · Diffusion interne équipe · cedric@proxima.green</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="navs">
+  <button class="nav-btn" id="prev" aria-label="Slide précédente">↑</button>
+  <button class="nav-btn" id="next" aria-label="Slide suivante">↓</button>
+</div>
+<nav class="dots" id="dots" aria-label="Progression"></nav>
+<div class="counter" id="counter"></div>
+
+<script>
+const deck=document.getElementById('deck'),dots=document.getElementById('dots'),
+      counter=document.getElementById('counter'),
+      prev=document.getElementById('prev'),next=document.getElementById('next'),
+      slides=[...deck.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const b=document.createElement('button');
+  b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b)});
+function idx(){const st=deck.scrollTop;let best=0,d=1/0;
+  slides.forEach((s,i)=>{const v=Math.abs(s.offsetTop-st);if(v<d){d=v;best=i}});return best}
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));
+  deck.scrollTo({top:slides[i].offsetTop,behavior:'smooth'})}
+function sync(){const i=idx();
+  dots.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  counter.textContent=(i+1)+' / '+slides.length;
+  prev.disabled=i===0;next.disabled=i===slides.length-1}
+deck.addEventListener('scroll',()=>requestAnimationFrame(sync));sync();
+prev.onclick=()=>go(idx()-1);next.onclick=()=>go(idx()+1);
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')  {e.preventDefault();go(idx()+1)}
+  if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(idx()-1)}
+});
+const seen=new Set();
+function countUp(el){const t=+el.dataset.count,s=performance.now(),d=1100;
+  (function f(n){const p=Math.min((n-s)/d,1);el.textContent=Math.round(t*p);
+   if(p<1)requestAnimationFrame(f)})(s)}
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('is-active');
+    if(!seen.has(e.target)){seen.add(e.target);
+      e.target.querySelectorAll('[data-count]').forEach(countUp)}}
+}),{root:deck,threshold:.45});
+slides.forEach(s=>io.observe(s));
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+  slides.forEach(s=>{s.classList.add('is-active');
+    s.querySelectorAll('[data-count]').forEach(el=>el.textContent=el.dataset.count)})}
+
+/* ═══ Gate v2 — SHA-256 salé ═══ */
+const HASH='d55d1f7a8b1e4d53c23eeaa57e73fda17fdffde86f78c2471a170575c3bcdcc1', SALT='proxima-share-v1:';
+async function sha(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function unlock(){document.body.classList.remove('locked');
+  const g=document.getElementById('gate');if(g)g.remove();sync()}
+if(localStorage.getItem('px-gate2')===HASH||sessionStorage.getItem('px-gate2')===HASH){unlock()}
+document.getElementById('gateForm')?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const h=await sha(SALT+document.getElementById('pw').value);
+  if(h===HASH){
+    (document.getElementById('remember').checked?localStorage:sessionStorage).setItem('px-gate2',HASH);
+    unlock()
+  }else{
+    const g=document.getElementById('gate');g.classList.remove('wrong');void g.offsetWidth;g.classList.add('wrong');
+    document.getElementById('pw').select()
+  }
+});
+/* ═══ Partage ═══ */
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400)}
+document.querySelectorAll('[data-share]').forEach(b=>b.addEventListener('click',async()=>{
+  const data={title:document.title,url:location.href};
+  if(navigator.share){try{await navigator.share(data)}catch(e){}}
+  else{
+    try{await navigator.clipboard.writeText(location.href);toast('Lien copié — collez-le dans Signal, mail…')}
+    catch(e){location.href='mailto:?subject='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(location.href)}
+  }
+}));
+</script>
+
+<div id="toast" role="status"></div>
+
+</body>
+</html>
