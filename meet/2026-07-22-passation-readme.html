@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Proxima Meet — Documentation de passation (22 juillet 2026)</title>
+<style>
+:root{
+  --proxima-green:#003C1C; --proxima-green-light:#00A858; --proxima-green-glow:#00E67A;
+  --proxima-red:#C1453B;
+  --green-tint-06:rgba(0,60,28,.06); --green-light-10:rgba(0,168,88,.10); --red-tint-10:rgba(193,69,59,.10);
+  --bg:#EEF1ED; --surface:#FFFFFF; --surface-muted:#F4F5F3;
+  --border:#E5E7E4; --border-strong:#D6DAD5;
+  --fg1:#0A0A0A; --fg2:rgba(0,0,0,.65); --fg3:#6B7280;
+  --radius-lg:14px; --radius-xl:16px; --radius-pill:999px;
+  --shadow-card:0 1px 2px rgba(0,0,0,.03),0 6px 22px rgba(0,0,0,.04);
+  --font-sans:"Mona Sans","Inter",system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --tracking-brand:-0.02em;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--fg1);
+  font-size:18px;line-height:1.6;overflow:hidden}
+.deck{height:100dvh;overflow-y:auto;scroll-snap-type:y proximity;scroll-behavior:smooth}
+.slide{min-height:100dvh;scroll-snap-align:start;display:flex;align-items:center;padding:72px 24px}
+.slide>.wrap{max-width:1020px;margin:0 auto;width:100%}
+.slide.hero{background:
+  radial-gradient(700px circle at 15% 12%, rgba(0,230,122,.13), transparent 60%),
+  radial-gradient(560px circle at 88% 4%, rgba(0,168,88,.10), transparent 55%), var(--bg)}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--proxima-green-light);margin-bottom:12px}
+h1{font-size:clamp(44px,7vw,76px);font-weight:800;letter-spacing:var(--tracking-brand);
+  line-height:1.06;color:var(--proxima-green)}
+h1 .ver{background:linear-gradient(90deg,var(--proxima-green-light),var(--proxima-green-glow));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:clamp(30px,4.6vw,48px);font-weight:800;letter-spacing:var(--tracking-brand);
+  line-height:1.12;color:var(--proxima-green);margin-bottom:10px}
+.badge{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:7px 16px;border-radius:var(--radius-pill);background:var(--green-light-10);
+  color:var(--proxima-green);border:1px solid rgba(0,168,88,.35);margin-bottom:20px}
+.cap{font-size:17px;color:var(--fg2);max-width:640px;margin-top:14px}
+.back{font-size:15px;font-weight:600;color:var(--proxima-green-light);text-decoration:none;
+  display:inline-block;margin-bottom:22px}
+code{font-family:var(--font-mono);font-size:.85em;background:var(--green-tint-06);padding:2px 7px;border-radius:6px}
+.hint{font-size:14px;color:var(--fg3);margin-top:44px}
+.foot{font-size:13px;color:var(--fg3);margin-top:38px}
+.split{display:grid;grid-template-columns:1.15fr 1fr;gap:48px;align-items:center;margin-top:26px}
+.giant{font-size:clamp(84px,12vw,140px);line-height:.85;font-weight:800;letter-spacing:-.04em;color:var(--proxima-green)}
+.giant small{font-size:clamp(24px,3.5vw,40px);color:var(--proxima-green-light);vertical-align:top;font-weight:700;margin-left:12px;letter-spacing:-.01em}
+.glabel{font-size:15px;color:var(--fg3);margin-top:10px}
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:26px}
+.cell{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:24px;box-shadow:var(--shadow-card);display:flex;flex-direction:column;gap:10px;
+  transition:box-shadow .3s,transform .3s}
+.cell:hover{box-shadow:0 0 24px rgba(0,230,122,.35);transform:translateY(-2px)}
+.cell.wide{grid-column:span 2}
+.cell b{font-size:17.5px;color:var(--proxima-green);letter-spacing:var(--tracking-brand);line-height:1.3}
+.cell .note{font-size:13px;color:var(--fg3)}
+.chip{width:44px;height:44px;border-radius:12px;background:var(--green-light-10);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ico{width:20px;height:20px;flex-shrink:0}
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-top:30px}
+.ba>div{border-radius:var(--radius-lg);padding:30px;border:1px solid var(--border)}
+.ba .avant{background:#FBEDEC}
+.ba .apres{background:#E8F6EE}
+.ba .tag{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.09em}
+.ba .avant .tag{color:var(--proxima-red)}.ba .apres .tag{color:var(--proxima-green-light)}
+.ba b{display:block;font-size:22px;letter-spacing:var(--tracking-brand);margin-top:8px;line-height:1.3}
+.ba .avant b{color:var(--proxima-red)}.ba .apres b{color:var(--proxima-green)}
+.ba p{font-size:14px;color:var(--fg2);margin-top:8px}
+.ba .arr{align-self:center;font-size:38px;color:var(--proxima-green-light);font-weight:800;background:none;border:none;padding:0}
+.tl{position:relative;padding-left:36px;margin-top:30px}
+.tl::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:2px;background:var(--border-strong)}
+.tl .it{position:relative;margin-bottom:26px}
+.tl .pt{position:absolute;left:-36px;top:4px;width:18px;height:18px;border-radius:50%;border:3px solid var(--bg)}
+.tl .pt.v{background:var(--proxima-green-light);color:#00A858;animation:pulse 1.5s infinite alternate}
+.tl .pt.g{background:var(--border-strong)}
+.tl .when{font:700 12px var(--font-sans);letter-spacing:.08em;text-transform:uppercase;display:block;color:var(--proxima-green-light)}
+.tl .it.g .when{color:var(--fg3)}
+.tl b{font-size:20px;letter-spacing:var(--tracking-brand);color:var(--proxima-green)}
+.tl p{font-size:14px;color:var(--fg3)}
+@keyframes pulse{from{box-shadow:0 0 6px currentColor}to{box-shadow:0 0 24px currentColor}}
+.a{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.slide.is-active .a{opacity:1;transform:none}
+.a.d1{transition-delay:.12s}.a.d2{transition-delay:.24s}.a.d3{transition-delay:.36s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}
+  .a{opacity:1;transform:none}}
+.dots{position:fixed;right:22px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:11px;z-index:40}
+.dots button{width:11px;height:11px;border-radius:50%;border:none;cursor:pointer;background:rgba(0,60,28,.20);transition:.2s;padding:0}
+.dots button.on{background:var(--proxima-green-glow);box-shadow:0 0 10px rgba(0,230,122,.65)}
+.navs{position:fixed;right:15px;bottom:78px;display:flex;flex-direction:column;gap:9px;z-index:40}
+.nav-btn{width:46px;height:46px;border-radius:50%;border:1px solid var(--border);background:var(--surface);
+  color:var(--proxima-green);font-size:19px;cursor:pointer;box-shadow:var(--shadow-card);transition:.2s}
+.nav-btn:hover{box-shadow:0 0 22px rgba(0,230,122,.4)}
+.nav-btn[disabled]{opacity:.25;cursor:default;box-shadow:none}
+.counter{position:fixed;left:22px;bottom:24px;font:600 13px var(--font-sans);color:var(--fg3);z-index:40}
+@media (max-width:700px){
+  .split{grid-template-columns:1fr;gap:26px}
+  .bento{grid-template-columns:1fr}.cell.wide{grid-column:auto}
+  .ba{grid-template-columns:1fr}.ba .arr{transform:rotate(90deg);justify-self:center}
+}
+@media (max-width:640px),print{
+  body{overflow:auto}
+  .deck{height:auto;overflow:visible;scroll-snap-type:none}
+  .slide{min-height:0;display:block;padding:48px 20px}
+  .slide:not(:last-child){border-bottom:1px solid var(--border)}
+  .slide:last-child{padding-bottom:120px}
+  .dots,.navs,.counter,.hint{display:none}
+  h1{font-size:38px}h2{font-size:28px}
+  .a{opacity:1;transform:none}
+}
+/* ═══ Photo panel ═══ */
+.photo{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.12);min-height:300px}
+.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,60,28,.05),rgba(0,60,28,.38))}
+.hsplit{display:grid;grid-template-columns:1.2fr 1fr;gap:44px;align-items:center}
+@media (max-width:820px){.hsplit{grid-template-columns:1fr;gap:24px}.photo{min-height:180px}}
+/* ═══ Gate v2 ═══ */
+#gate{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
+  padding:20px;background:
+  radial-gradient(700px circle at 15% 12%, rgba(0,230,122,.14), transparent 60%),
+  radial-gradient(560px circle at 88% 90%, rgba(0,168,88,.10), transparent 55%), var(--bg)}
+#gate .panel{width:100%;max-width:400px;background:var(--surface);border:1px solid var(--border);
+  border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,.08);padding:38px 34px;text-align:center}
+#gate .mark{width:56px;height:56px;border-radius:16px;background:var(--proxima-green);margin:0 auto 18px;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 0 28px rgba(0,230,122,.35)}
+#gate h1{font-size:26px;line-height:1.2}
+#gate .gsub{font-size:14px;color:var(--fg3);margin:6px 0 26px}
+#gate input[type=password]{width:100%;padding:14px 16px;font:inherit;font-size:16px;
+  border:1px solid var(--border-strong);border-radius:10px;outline:none;text-align:center;
+  letter-spacing:.08em;transition:.2s}
+#gate input[type=password]:focus{border-color:var(--proxima-green-light);box-shadow:0 0 0 3px rgba(0,230,122,.18)}
+#gate button{width:100%;margin-top:14px;padding:14px;font:inherit;font-size:16px;font-weight:700;
+  color:#fff;background:var(--proxima-green);border:none;border-radius:10px;cursor:pointer;
+  transition:box-shadow .25s, transform .15s}
+#gate button:hover{box-shadow:0 0 26px rgba(0,230,122,.45);transform:translateY(-1px)}
+#gate label{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;
+  font-size:13.5px;color:var(--fg3);cursor:pointer}
+#gate input[type=checkbox]{width:16px;height:16px;accent-color:var(--proxima-green-light)}
+#gate .err{display:none;margin-top:14px;font-size:13.5px;font-weight:600;color:var(--proxima-red)}
+#gate.wrong .err{display:block}
+#gate.wrong .panel{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
+body.locked>*:not(#gate){display:none!important}
+/* ═══ Pill nav flottante ═══ */
+.pillnav{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);z-index:60;
+  display:flex;align-items:center;gap:4px;padding:6px;border-radius:var(--radius-pill);
+  background:rgba(255,255,255,.6);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.5);box-shadow:var(--shadow-card);
+  opacity:.92;transition:opacity .25s, box-shadow .3s, border-color .3s;max-width:calc(100vw - 20px)}
+.pillnav:hover,.pillnav:focus-within{opacity:1;border-color:rgba(0,230,122,.75);
+  box-shadow:0 0 0 1px rgba(0,230,122,.55), 0 0 22px rgba(0,230,122,.45), inset 0 0 12px rgba(0,230,122,.08)}
+.pillnav a,.pillnav button{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;min-height:40px;
+  border-radius:var(--radius-pill);border:none;background:none;cursor:pointer;text-decoration:none;
+  font:600 14px var(--font-sans);color:var(--proxima-green);transition:background .2s;white-space:nowrap}
+.pillnav a:hover,.pillnav button:hover{background:var(--green-tint-06)}
+@media (min-width:700px){.pillnav{opacity:.55}}
+#toast{position:fixed;bottom:88px;left:50%;transform:translate(-50%,150px);z-index:80;
+  background:var(--proxima-green);color:#fff;font:600 14px var(--font-sans);
+  padding:12px 22px;border-radius:var(--radius-pill);box-shadow:0 0 24px rgba(0,230,122,.4);
+  transition:transform .35s cubic-bezier(.16,1,.3,1)}
+#toast.show{transform:translate(-50%,0)}
+</style>
+</head>
+<body class="locked">
+
+<div id="gate">
+  <form class="panel" id="gateForm">
+    <div class="mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="#00E67A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M17 2 l4 4 -4 4"/><path d="M3 11 V9 a4 4 0 0 1 4-4 h14"/>
+        <path d="M7 22 l-4-4 4-4"/><path d="M21 13 v2 a4 4 0 0 1 -4 4 H3"/>
+      </svg>
+    </div>
+    <h1>Proxima</h1>
+    <p class="gsub">Partage équipe — accès réservé</p>
+    <input type="password" id="pw" placeholder="Mot de passe d'équipe" autocomplete="current-password">
+    <button type="submit">Entrer</button>
+    <label><input type="checkbox" id="remember"> Se souvenir de moi sur cet appareil</label>
+    <p class="err">Mot de passe incorrect.</p>
+  </form>
+</div>
+
+<nav class="pillnav" aria-label="Navigation">
+  <a href="../index.html">← Accueil</a>
+  <button type="button" data-share aria-label="Partager cette page">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7M16 6l-4-4-4 4M12 2v14"/></svg>
+    Partager
+  </button>
+</nav>
+
+<div class="deck" id="deck">
+
+  <section class="slide hero is-active">
+    <div class="wrap hsplit">
+      <div>
+      <a class="back" href="../index.html">← Retour au hub</a>
+      <div><span class="badge">Récap équipe · Proxima Meet · 22 juillet 2026</span></div>
+      <h1 class="a">Meet est désormais <span class="ver">transmissible</span></h1>
+      <p class="cap a d1">Toute la connaissance du projet — 3 mois d'historique, les bugs, l'architecture, les procédures — est maintenant écrite noir sur blanc sur le dépôt GitHub. N'importe quel développeur peut reprendre le flambeau.</p>
+      <p class="hint a d3">↓ Faites défiler</p>
+      </div>
+      <div class="photo a d2" aria-hidden="true">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=70&auto=format&fit=crop" alt="" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">1 · Pourquoi</p>
+      <h2 class="a">Le savoir était dans une seule tête</h2>
+      <div class="ba">
+        <div class="avant a d1">
+          <span class="tag">Avant</span>
+          <b>Connaissance dispersée et implicite</b>
+          <p>Historique éparpillé entre le journal de sessions, des notes de reprise, des comptes-rendus de réunion et la mémoire de travail. En cas d'absence ou de passation, des semaines pour reconstituer le contexte.</p>
+        </div>
+        <div class="arr a d2" aria-hidden="true">→</div>
+        <div class="apres a d2">
+          <span class="tag">Après</span>
+          <b>Un document d'accueil unique sur GitHub</b>
+          <p>Le README du dépôt raconte tout : d'où vient le projet, ce qui a été fait, les pièges connus, comment développer et comment publier une version. Visible dès la page d'accueil du dépôt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">2 · Ce qui a été publié</p>
+      <h2 class="a">Trois livrables sur le dépôt</h2>
+      <div class="bento">
+        <div class="cell wide a d1">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+          <b>Le README de passation</b>
+          <span class="note">Chronologie complète depuis avril 2026, réalisations par thème, guide d'installation du poste de dev, procédure de release et de mise à jour automatique, liste des chantiers restants.</span>
+        </div>
+        <div class="cell a d1">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 l7 4 v6 c0 4-3 7-7 8 c-4-1-7-4-7-8 V7 z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <b>Le registre des bugs</b>
+          <span class="note">Tous les bugs rencontrés depuis le début, avec leur cause et leur correction — pour ne jamais les revivre.</span>
+        </div>
+        <div class="cell a d2">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <b>La carte d'architecture</b>
+          <span class="note">Fichier <code>architecture.json</code> : composants, pipeline audio, mises à jour, intégrations — lisible par un humain comme par un outil.</span>
+        </div>
+        <div class="cell wide a d3">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l2.5 2.5"/></svg></div>
+          <b>Le journal de bord remis à jour</b>
+          <span class="note">La mise en production du 15 juillet et les suites à donner sont maintenant tracées dans le journal du projet.</span>
+        </div>
+        <div class="cell a d3">
+          <div class="chip"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#00A858" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12a3 3 0 1 0 3 3V7a4 4 0 0 1 8 0v8"/></svg></div>
+          <b>Deux branches à jour</b>
+          <span class="note">La page d'accueil GitHub affiche le bon état du projet et renvoie vers la branche de travail active.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">3 · Les chiffres</p>
+      <h2 class="a">Trois mois de projet capitalisés</h2>
+      <div class="split">
+        <div class="a d1">
+          <div class="giant"><span data-count="188">0</span><small>commits</small></div>
+          <p class="glabel">retracés depuis le premier jour (avril 2026)</p>
+          <div class="giant" style="margin-top:26px"><span data-count="25">0</span><small>bugs</small></div>
+          <p class="glabel">documentés avec cause et correction</p>
+        </div>
+        <div class="a d2">
+          <div class="giant"><span data-count="120">0</span><small>tickets</small></div>
+          <p class="glabel">passés en revue (ouverts et fermés)</p>
+          <div class="giant" style="margin-top:26px"><span data-count="12">0</span><small>versions</small></div>
+          <p class="glabel">jalons de la v0.3.0 à la 0.5.38 en production</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">4 · Ce que ça change</p>
+      <h2 class="a">Un nouveau dev est opérationnel en heures, pas en semaines</h2>
+      <div class="bento">
+        <div class="cell wide a d1"><b>Onboarding autonome</b><span class="note">Le README explique l'installation du poste, les commandes, et surtout les pièges connus qui coûtaient des journées (outils de build, composants à recompiler…).</span></div>
+        <div class="cell a d1"><b>Continuité assurée</b><span class="note">Vacances, absence, renfort : le projet ne dépend plus d'une seule personne.</span></div>
+        <div class="cell a d2"><b>Erreurs non répétées</b><span class="note">Chaque bug passé documente sa cause : on ne re-débogue pas deux fois la même chose.</span></div>
+        <div class="cell wide a d2"><b>Base saine pour les prochains chantiers</b><span class="note">Tickets en cours, risques identifiés et priorités sont listés au même endroit — la reprise de sprint se prépare en lisant une page.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slide">
+    <div class="wrap">
+      <p class="kicker a">5 · La suite</p>
+      <h2 class="a">Ce qui reste sur la table</h2>
+      <div class="tl a d1">
+        <div class="it"><span class="pt v"></span><span class="when">Fait · 22 juil.</span><b>Documentation de passation en ligne</b><p>README + carte d'architecture publiés sur le dépôt GitHub.</p></div>
+        <div class="it g"><span class="pt g"></span><span class="when">Priorité sécurité</span><b>Renouveler les accès du stockage de mises à jour</b><p>Rotation des clés d'accès promise après la release du 15 juillet.</p></div>
+        <div class="it g"><span class="pt g"></span><span class="when">Outillage</span><b>Corriger le script de packaging Mac</b><p>Il ne retrouve pas les fichiers produits par l'usine de build — assemblé à la main pour la 0.5.38.</p></div>
+        <div class="it g"><span class="pt g"></span><span class="when">Board</span><b>Solder les tickets livrés &amp; traiter les nouveaux</b><p>Passer en « Terminé » les 4 tickets de persistance livrés en 0.5.38 ; instruire les demandes récentes (barre audio, fin de réunion auto, dossiers, self-serve).</p></div>
+      </div>
+      <p class="foot">Proxima Meet · Documentation de passation · 22 juillet 2026 · Diffusion interne équipe · cedric@proxima.green</p>
+    </div>
+  </section>
+
+</div>
+
+<div class="navs">
+  <button class="nav-btn" id="prev" aria-label="Slide précédente">↑</button>
+  <button class="nav-btn" id="next" aria-label="Slide suivante">↓</button>
+</div>
+<nav class="dots" id="dots" aria-label="Progression"></nav>
+<div class="counter" id="counter"></div>
+
+<script>
+const deck=document.getElementById('deck'),dots=document.getElementById('dots'),
+      counter=document.getElementById('counter'),
+      prev=document.getElementById('prev'),next=document.getElementById('next'),
+      slides=[...deck.querySelectorAll('.slide')];
+slides.forEach((s,i)=>{const b=document.createElement('button');
+  b.setAttribute('aria-label','Slide '+(i+1));b.onclick=()=>go(i);dots.appendChild(b)});
+function idx(){const st=deck.scrollTop;let best=0,d=1/0;
+  slides.forEach((s,i)=>{const v=Math.abs(s.offsetTop-st);if(v<d){d=v;best=i}});return best}
+function go(i){i=Math.max(0,Math.min(slides.length-1,i));
+  deck.scrollTo({top:slides[i].offsetTop,behavior:'smooth'})}
+function sync(){const i=idx();
+  dots.querySelectorAll('button').forEach((b,k)=>b.classList.toggle('on',k===i));
+  counter.textContent=(i+1)+' / '+slides.length;
+  prev.disabled=i===0;next.disabled=i===slides.length-1}
+deck.addEventListener('scroll',()=>requestAnimationFrame(sync));sync();
+prev.onclick=()=>go(idx()-1);next.onclick=()=>go(idx()+1);
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' ')  {e.preventDefault();go(idx()+1)}
+  if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();go(idx()-1)}
+});
+const seen=new Set();
+function countUp(el){const t=+el.dataset.count,s=performance.now(),d=1100;
+  (function f(n){const p=Math.min((n-s)/d,1);el.textContent=Math.round(t*p);
+   if(p<1)requestAnimationFrame(f)})(s)}
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('is-active');
+    if(!seen.has(e.target)){seen.add(e.target);
+      e.target.querySelectorAll('[data-count]').forEach(countUp)}}
+}),{root:deck,threshold:.45});
+slides.forEach(s=>io.observe(s));
+if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+  slides.forEach(s=>{s.classList.add('is-active');
+    s.querySelectorAll('[data-count]').forEach(el=>el.textContent=el.dataset.count)})}
+
+/* ═══ Gate v2 — SHA-256 salé ═══ */
+const HASH='d55d1f7a8b1e4d53c23eeaa57e73fda17fdffde86f78c2471a170575c3bcdcc1', SALT='proxima-share-v1:';
+async function sha(t){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}
+function unlock(){document.body.classList.remove('locked');
+  const g=document.getElementById('gate');if(g)g.remove();sync()}
+if(localStorage.getItem('px-gate2')===HASH||sessionStorage.getItem('px-gate2')===HASH){unlock()}
+document.getElementById('gateForm')?.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const h=await sha(SALT+document.getElementById('pw').value);
+  if(h===HASH){
+    (document.getElementById('remember').checked?localStorage:sessionStorage).setItem('px-gate2',HASH);
+    unlock()
+  }else{
+    const g=document.getElementById('gate');g.classList.remove('wrong');void g.offsetWidth;g.classList.add('wrong');
+    document.getElementById('pw').select()
+  }
+});
+/* ═══ Partage ═══ */
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400)}
+document.querySelectorAll('[data-share]').forEach(b=>b.addEventListener('click',async()=>{
+  const data={title:document.title,url:location.href};
+  if(navigator.share){try{await navigator.share(data)}catch(e){}}
+  else{
+    try{await navigator.clipboard.writeText(location.href);toast('Lien copié — collez-le dans Signal, mail…')}
+    catch(e){location.href='mailto:?subject='+encodeURIComponent(document.title)+'&body='+encodeURIComponent(location.href)}
+  }
+}));
+</script>
+
+<div id="toast" role="status"></div>
+
+</body>
+</html>
